@@ -1,0 +1,17 @@
+<ROSETTASCRIPTS>
+    <SCOREFXNS>
+        <densrelax weights="beta_nov15_cart" symmetric=0>
+   			<Reweight scoretype=atom_pair_constraint weight=0.5/>
+   			<Reweight scoretype=elec_dens_fast weight=20.0/>
+		</densrelax>
+	</SCOREFXNS>
+	<MOVERS>
+        <SetupForDensityScoring name=setup_dens/>
+        <FastRelax name=fastrelax scorefxn=densrelax cartesian=1 repeats=4/> 
+	</MOVERS>
+	<PROTOCOLS>
+        <Add mover=setup_dens/>
+        <Add mover=fastrelax/>
+    </PROTOCOLS>
+    <OUTPUT scorefxn=densrelax/>
+</ROSETTASCRIPTS> 

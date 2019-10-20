@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=",  refinement local rebuild">
+<title>Model refinement via iterative local rebuilding | Dimaio lab CryoEM tutorials</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme-blue.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="documentation_test" href="http://0.0.0.0:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> Dimaio lab CryoEM tutorials</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li>
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="https://github.com/tomjoht/documentation-theme-jekyll" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Model refinement via iterative local rebuilding">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Dimaio lab tutorials 1.0</li>
+  
+  
+  
+  <li>
+      <a title="Rosetta & cryoEM tutorial" href="#">Rosetta & cryoEM tutorial</a>
+      <ul>
+          
+          
+          
+          <li><a title="" href="index.html"></a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Rosetta & CryoEM basics" href="001_basics_main.html">Rosetta & CryoEM basics</a></li>
+          
+          
+          
+          
+          
+          
+          <li class="active"><a title="Model refinement" href="002_refinement_main.html">Model refinement</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Model rebuilding" href="003_rebuilding_main.html">Model rebuilding</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="De-novo modeling" href="004_denovo_main.html">De-novo modeling</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Rebuilding long segments" href="005_ES_main.html">Rebuilding long segments</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">Model refinement via iterative local rebuilding</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+    
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    
+
+
+    
+
+    <a target="_blank" rel="noopener" href="https://github.com/danpf/documentation_test/blob/master/docs/pages/002_refinement/002_refinement_main.md" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
+
+    
+
+   <p>In this section, we introduce our cryoEM refinement protocol, which uses an iterative local rebuilding procedure to escape local minima during refinement.</p>
+
+<p>The section is divided into two parts, in the first, we introduce the method for non-symmetric systems; in the second, we describe how to use this method for symmetric systems.</p>
+
+<p>As a running example, we refine models of the transmembrane region of the TRPV1 ion channel, using a 3.4 Å cryoEM single particle reconstruction (M. Liao, E. Cao, D. Julius, Y. Cheng, Nature, 2013), and the deposited model (id: 3j5p) as a starting model. We will first refine this asymmetrically, and then introduce symmetric refinement.</p>
+
+<h2 id="example-2a-asymmetric-refinement-into-cryoem-density">Example 2A: Asymmetric refinement into cryoEM density</h2>
+
+<p>A summary of the XML used for refinement (2_cryoem_refinement/A_asymm_refine.xml) is shown below. Following, a brief description of the movers and options available is provided.</p>
+
+<ROSETTASCRIPTS>
+   <SCOREFXNS>
+      <ScoreFunction name="cen" weights="score4_smooth_cart">
+         <Reweight scoretype="elec_dens_fast" weight="20" />
+      </ScoreFunction>
+      <ScoreFunction name="dens_soft" weights="beta_soft">
+         <Reweight scoretype="cart_bonded" weight="0.5" />
+         <Reweight scoretype="pro_close" weight="0.0" />
+         <Reweight scoretype="elec_dens_fast" weight="%%denswt%%" />
+      </ScoreFunction>
+      <ScoreFunction name="dens" weights="beta_cart">
+         <Reweight scoretype="elec_dens_fast" weight="%%denswt%%" />
+         <Set scale_sc_dens_byres="R:0.76,K:0.76,E:0.76,D:0.76,M:0.76,C:0.81,Q:0.81,H:0.81,N:0.81,T:0.81,S:0.81,Y:0.88,W:0.88,A:0.88,F:0.88,P:0.88,I:0.88,L:0.88,V:0.88" />
+      </ScoreFunction>
+   </SCOREFXNS>
+
+   <MOVERS>
+      <SetupForDensityScoring name="setupdens" />
+      <LoadDensityMap name="loaddens" mapfile="%%map%%" />
+
+      <SwitchResidueTypeSetMover name="tocen" set="centroid" />
+
+      <MinMover name="cenmin" scorefxn="cen" type="lbfgs_armijo_nonmonotone" max_iter="200" tolerance="0.00001" bb="1" chi="1" jump="ALL" />
+
+      <CartesianSampler name="cen5_50" automode_scorecut="-0.5" scorefxn="cen" mcscorefxn="cen" fascorefxn="dens_soft" strategy="auto" fragbias="density" rms="%%rms%%" ncycles="200" fullatom="0" bbmove="1" nminsteps="25" temp="4" fraglens="7" nfrags="25" />
+      <CartesianSampler name="cen5_60" automode_scorecut="-0.3" scorefxn="cen" mcscorefxn="cen" fascorefxn="dens_soft" strategy="auto" fragbias="density" rms="%%rms%%" ncycles="200" fullatom="0" bbmove="1" nminsteps="25" temp="4" fraglens="7" nfrags="25" />
+      <CartesianSampler name="cen5_70" automode_scorecut="-0.1" scorefxn="cen" mcscorefxn="cen" fascorefxn="dens_soft" strategy="auto" fragbias="density" rms="%%rms%%" ncycles="200" fullatom="0" bbmove="1" nminsteps="25" temp="4" fraglens="7" nfrags="25" />
+      <CartesianSampler name="cen5_80" automode_scorecut="0.0" scorefxn="cen" mcscorefxn="cen" fascorefxn="dens_soft" strategy="auto" fragbias="density" rms="%%rms%%" ncycles="200" fullatom="0" bbmove="1" nminsteps="25" temp="4" fraglens="7" nfrags="25" />
+
+      <ReportFSC name="report" testmap="%%testmap%%" res_low="10.0" res_high="%%reso%%" />
+
+      <BfactorFitting name="fit_bs" max_iter="50" wt_adp="0.0005" init="1" exact="1" />
+
+      <FastRelax name="relaxcart" scorefxn="dens" repeats="1" cartesian="1" />
+   </MOVERS>
+
+
+   <PROTOCOLS>
+      <Add mover="setupdens" />
+      <Add mover="loaddens" />
+      <Add mover="tocen" />
+      <Add mover="cenmin" />
+      <Add mover="relaxcart" />
+      <Add mover="cen5_50" />
+      <Add mover="relaxcart" />
+      <Add mover="cen5_60" />
+      <Add mover="relaxcart" />
+      <Add mover="cen5_70" />
+      <Add mover="relaxcart" />
+      <Add mover="cen5_80" />
+      <Add mover="relaxcart" />
+      <Add mover="relaxcart" />
+      <Add mover="report" />
+   </PROTOCOLS>
+   <OUTPUT scorefxn="dens" />
+
+</ROSETTASCRIPTS>
+
+<p>The protocol is a bit involved, but is described in the following.  The first thing to note is the use of macros like <code class="highlighter-rouge">%%denswt%%</code>.  These are command arguments that may be specified from the command line through the flag <code class="highlighter-rouge">–parser::script_vars denswt=25.0</code>.  The protocol above uses these macros in place of parameters that users would most like to change; other parameters should be left as is except for advanced users.
+The main addition is the CartesianSampler mover. This mover iteratively locally rebuilds the structure in user-specified or automatically determined regions.  A brief description of the arguments to this mover:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">name="cen5_70"</code>
+    <ul>
+      <li>the name of the mover, referred to in the <PROTOCOLS> block (this can be anything)</PROTOCOLS></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">strategy="auto"</code>
+    <ul>
+      <li>the strategy to use in selecting what to rebuild.  One of:
+        <ul>
+          <li><code class="highlighter-rouge">auto</code>: select regions automatically based on density fit &amp; local strain (using the cutoff in <code class="highlighter-rouge">automode_scorecut</code>, e.g., <code class="highlighter-rouge">automode_scorecut="-0.1"</code>)</li>
+          <li><code class="highlighter-rouge">user</code>: manually specify residues (using the flag residues, e.g., residues=”32A-48A”)</li>
+          <li><code class="highlighter-rouge">rama</code>: select regions automatically based on rama score only</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">rms="1.5"</code>
+    <ul>
+      <li>the cutoff on similarity when locally rebuilding.  Increasing this value will increase model diversity (allowing worse starting models to be refined but requiring additional sampling)</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">ncycles="200"</code>
+    <ul>
+      <li>the number of rebuilding cycles to consider.  Increasing this will increase runtime and slightly increase model diversity.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">fraglens="7"</code>
+    <ul>
+      <li>the segment length to replace.  This must be an odd number from 5-13, and increasing this value will increase model diversity significantly.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The remaining options should never be changed.
+Another option is passed to the density scoring via the <code class="highlighter-rouge">&lt;Set scale_sc_dens_byres=.../&gt;</code> tag. In the refinement protocol, this sets a per-amino-acid sidechain reweighing.  The weights shown in this example were determined by fitting these parameters into refined structures into several 3-5Å cryoEM density maps; the end result is a slight downweighing of sidechain density, particularly for charged sidechains.
+<em>_This should not be changed except by advanced users._</em></p>
+
+<p>The MinMover first minimizes the structure using a low-resolution energy function (cen). We have found this step is most useful for improving protein backbone geometry, particularly with hand-traced models. This low-resolution scorefunction uses the centroid representation, which is enabled by the SwitchResidueTypeSet mover.</p>
+
+<p>The FitBFactors mover fits real-space atomic B factors to maximize model-map correlation. A constraint enforcing nearby atoms to take the same B factors is also employed, and the weight on this term is controlled with the wt_adp term (0.0005 is generally well-behaved). Finally, init=1 means to do a quick scan of overall B factors before beginning refinement; if there is more than one call to this mover in a single trajectory, then only the first needs to have init=1. Exact=1 should always be used.</p>
+
+<p>Finally, the ReportFSC mover assesses model agreement to the map used for fitting as well as an independent map using the integrated FSC over high-resolution shells.  We have found integrating from 10Å to the resolution of the data is best for model discrimination.</p>
+
+<p>This command is executed using the following (scenario2_cryoem_refinement/A_asymm_refine.sh):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">$ROSETTA3</span>/source/bin/rosetta_scripts.macosclangrelease <span class="se">\</span>
+  <span class="nt">-database</span> <span class="nv">$ROSETTA3</span>/database/ <span class="se">\</span>
+  <span class="nt">-in</span>::file::s 3j5p_transmem_A.pdb <span class="se">\</span>
+  <span class="nt">-parser</span>::protocol A_asymm_refine.xml <span class="se">\</span>
+  <span class="nt">-parser</span>::script_vars <span class="nv">denswt</span><span class="o">=</span>35 <span class="nv">rms</span><span class="o">=</span>1.5 <span class="nv">reso</span><span class="o">=</span>3.4 <span class="nv">map</span><span class="o">=</span>half1_34A.mrc <span class="nv">testmap</span><span class="o">=</span>half2_34A.mrc <span class="se">\</span>
+  <span class="nt">-ignore_unrecognized_res</span> <span class="se">\</span>
+  <span class="nt">-edensity</span>::mapreso 3.4 <span class="se">\</span>
+  <span class="nt">-default_max_cycles</span> 200 <span class="se">\</span>
+  <span class="nt">-edensity</span>::cryoem_scatterers <span class="se">\</span>
+  <span class="nt">-beta</span> <span class="se">\</span>
+  <span class="nt">-out</span>::suffix _asymm <span class="se">\</span>
+  <span class="nt">-crystal_refine</span>
+
+</code></pre></div></div>
+
+<p>In bold are the parameters that should be changed in adapting this run for other systems.  The first is the input structure, which should be specified with the argument –in::file::s.  The second are the parameters to be passed through to the script (using the macro replacement machinery of RosettaScripts).  Three of these describe the input maps:</p>
+<ul>
+  <li><code class="highlighter-rouge">map=half1_34A.mrc</code> – the map to refine against</li>
+  <li><code class="highlighter-rouge">testmap=half2_34A.mrc</code> – an independent map for validation
+    <ul>
+      <li>(if not using split maps, just provide the same map as the previous argument)</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">reso=3.4</code> – the resolution of the data
+    <ul>
+      <li>(note that this needs to be provided twice in the command line, once for scoring and once for reporting)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The other two are parameters to the algorithm:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">denswt=35</code> – the weight on the experimental density data</li>
+  <li><code class="highlighter-rouge">rms=1.5</code> – the amount of deviation to allow in fragment insertion moves
+    <ul>
+      <li>(larger values will lead to more model deviation)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The density weight of 25 works reasonably well as a starting point, but one might want to explore several different values using an independent reconstruction.  Manual inspection of output models for molprobity score, free FSC, and (free FSC – work FSC) should provide clues as to which weight works best.</p>
+
+<p>A description of much of the work in this section is described in the reference:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Wang RY, Song Y, Barad BA, Cheng Y, Fraser JS, DiMaio F.  Automated structure refinement of macromolecular assemblies from cryo-EM maps using Rosetta. Elife. 2016 Sep 26;5. pii: e17219.
+</code></pre></div></div>
+
+<h2 id="job-distribution">Job distribution</h2>
+<p>It is generally useful to sample ~100 models from each starting point.  For this purpose, it may be useful to run multiple jobs in parallel.  To prevent output structures from clobbering one another, the flag <code class="highlighter-rouge">-out::suffix</code> may be useful, where each separate job is given a different suffix.
+For example, on a 16-core machine, we may specify <code class="highlighter-rouge">-out::suffix _$1</code>, then (using GNU parallel) run the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel -j16 ./ C_rosettaCM_monomer.sh {} ::: {1..16}
+</code></pre></div></div>
+
+<p>Finally, GNU parallel allows launching of jobs remotely if SSH keys have been set up for passwordless login.  To run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel –S 16/node1,16/node2,16/node3,16/node4 --workdir . ./C_rosettaCM_monomer.sh {} ::: {1..48}
+</code></pre></div></div>
+
+<p>This will launch instead 48 jobs spread across four machines.  See the GNU parallel documentation (https://www.gnu.org/software/parallel/) for more information.</p>
+
+<h2 id="analyzing-results-and-model-selection">Analyzing results and model selection</h2>
+
+<p>While this is an active topic of research, generally – once a density weight has been chosen – to select the best models from among the full set, we want to select models optimizing both model geometry and free FSC values.  Model geometry may be evaluated using either: a) Molprobity, or b) Rosetta energies after subtracting density energies.  The latter may be done by inspecting the score*.sc files produced as output.</p>
+
+<p><em>Generally, we select the best 20% of models by geometry, and selecting the best overall by free FSC.  The top 5 models should be inspected for model convergence as well as visually inspected for density map agreement.</em></p>
+
+<h2 id="example-2b-symmetric-refinement-into-cryoem-density">Example 2B: Symmetric refinement into cryoEM density</h2>
+<p>As this is a symmetric system, to correctly evaluate the energetics of the system, we need to model with symmetry-related copies present. This may be done through a two-step process: first, we run the <code class="highlighter-rouge">make_symmdef_file.pl</code> script to prepare a description of the symmetry of the system in a Rosetta-readable format. Next, we enable symmetric scoring and optimization within the XML file.</p>
+
+<p>The information that Rosetta needs to know about a symmetric system is encoded in the symmetry definition file. It tells Rosetta: (a) how to score a structure symmetrically from only asymmetric unit interactions, and (b) how the rigid-body degrees of freedom are allowed to move to maintain the symmetry of the system.</p>
+
+<p>To aid in creating a symmetry definition file from a symmetric (or near-symmetric) PDB, an application, <code class="highlighter-rouge">make_symmdef_file.pl</code>, has been included in <code class="highlighter-rouge">src/apps/public/symmetry</code>. To generate the symmetry-definition file for TRPV1, we run the command in 2_cryoem_refinement/B1_make_symmdef.sh.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">$ROSETTA3</span>/source/src/apps/public/symmetry/make_symmdef_file.pl <span class="se">\</span>
+ <span class="nt">-m</span> NCS <span class="nt">-a</span> A <span class="nt">-i</span> B <span class="nt">-p</span> 3j5p_transmem.pdb <span class="nt">-r</span> 1000.0 <span class="o">&gt;</span> TRPV1.symm
+
+</code></pre></div></div>
+
+<p>This script needs a few pieces of information: with –m, the type of symmetry to generate (here NCS), with –a, the primary chain (here A), and with –i, an adjacent chain in each symmetry group, separated by spaces (here just B). For Cn symmetries, only one adjacent chain is given; for Dn, two are given. Finally, with –r, we give the contact distance between a neighbor chain and the primary chain necessary to include that subunit explicitly (here, 1000, to ensure every symmetrically related copy is included). If the input system is asymmetric, the script will make a symmetrical version of it (sometimes significantly perturbing it in the process). There are a lot of other options, including forcing symmetrical order and helical and higher-order symmetries, see the documentation!</p>
+
+<p>In addition to the definition file written to STDOUT, the script will also write a file 3j5p_transmem_symm.pdb, containing the symmetrized version of the input file, and a file 3j5p_transmem_INPUT.pdb, that contains only the mainchain, to be used as input (in addition to the symmetry definition file).
+The symmetry definition file looks something like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>symmetry_name TRPV1__4
+E = 4*VRT0_base + 4*(VRT0_base:VRT3_base) + 2*(VRT0_base:VRT2_base) anchor_residue CoM
+...
+set_dof JUMP0_to_com x(11.7023996817515)
+set_dof JUMP0_to_subunit angle_x angle_y angle_z
+...
+</code></pre></div></div>
+
+<p>The omitted sections describe a system of virtual residues that maintain the symmetry of the system, and they generally should remain unedited.
+The two set_dof lines should be edited. There are two possibilities when refining symmetric structures into density:</p>
+
+<p>A) we don’t want to refine the rigid body orientation of the entire system; 
+we know the symmetry axes and we don’t want them to move
+B) we do want to refine the orientation of the entire system, including symmetry axes</p>
+
+<p>Generally, in cryoEM, where the maps are symmetrically averaged, and the symmetry is known, we want to use strategy A. However, in some cases (for example, if our starting model was not perfectly symmetric) we want to use strategy B. In both cases, a minor edit to the set_dof lines in the symmdef file is necessary.
+For strategy A, because we are using density, we need to change the first set_dof line to the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set_dof JUMP0_to_com x y z
+</code></pre></div></div>
+
+<p>For strategy B, we leave the two lines unchanged and instead add a third line:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set_dof JUMP0 x y z angle_x angle_y angle_z
+</code></pre></div></div>
+
+<p>For Dn symmetries, the changes are similar, except in A the jump name is JUMP0_0_to_com.  The rest of this section uses strategy A; the edited symmetry definition file is in scenario1_cryoem_refinement/C4_edit.symm</p>
+
+<p>Once a symmetry definition file has been generated, then refining structures in Rosetta symmetrically is straightforward. The changes to the previous XML file are indicated below (see 2_cryoem_refinement/B2_symm_refine.xml):</p>
+
+<p>changes:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+&lt;ScoreFunction name="cen" weights="score4_smooth_cart" symmetric="1"&gt;
+&lt;ScoreFunction name="dens_soft" weights="eta_soft" symmetric="1"&gt;
+&lt;ScoreFunction name="dens" weights="talaris2013_cart" symmetric="1"&gt;
+...
+&lt;SetupForSymmetry name="setupsymm" definition="%%symmdef%%"/&gt;
+...
+&lt;SymMinMover name="cenmin" scorefxn="cen" type="lbfgs_armijo_nonmonotone"
+         max_iter="200" tolerance="0.00001" bb="1" chi="1" jump="ALL"/&gt;
+</code></pre></div></div>
+
+<p>full file:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ROSETTASCRIPTS&gt;
+   &lt;SCOREFXNS&gt;
+      &lt;ScoreFunction name="cen" weights="score4_smooth_cart" symmetric="1"&gt;
+         &lt;Reweight scoretype="elec_dens_fast" weight="20"/&gt;
+      &lt;/ScoreFunction&gt;
+      &lt;ScoreFunction name="dens_soft" weights="beta_soft" symmetric="1"&gt;
+         &lt;Reweight scoretype="cart_bonded" weight="0.5"/&gt;
+         &lt;Reweight scoretype="pro_close" weight="0.0"/&gt;
+         &lt;Reweight scoretype="elec_dens_fast" weight="%%denswt%%"/&gt;
+      &lt;/ScoreFunction&gt;
+      &lt;ScoreFunction name="dens" weights="beta_cart" symmetric="1"&gt;
+         &lt;Reweight scoretype="elec_dens_fast" weight="%%denswt%%"/&gt;
+         &lt;Set scale_sc_dens_byres="R:0.76,K:0.76,E:0.76,D:0.76,M:0.76,C:0.81,Q:0.81,H:0.81,N:0.81,T:0.81,S:0.81,Y:0.88,W:0.88,A:0.88,F:0.88,P:0.88,I:0.88,L:0.88,V:0.88"/&gt;
+      &lt;/ScoreFunction&gt;
+   &lt;/SCOREFXNS&gt;
+   &lt;MOVERS&gt;
+      &lt;SetupForSymmetry name="setupsymm" definition="%%symmdef%%"/&gt;
+
+      &lt;LoadDensityMap name="loaddens" mapfile="%%map%%"/&gt;
+
+      &lt;SwitchResidueTypeSetMover name="tocen" set="centroid"/&gt;
+
+      &lt;SymMinMover name="cenmin" scorefxn="cen" type="lbfgs_armijo_nonmonotone"
+         max_iter="200" tolerance="0.00001" bb="1" chi="1" jump="ALL"/&gt;
+
+      &lt;CartesianSampler name="cen5_50" automode_scorecut="-0.5" scorefxn="cen"
+         mcscorefxn="cen" fascorefxn="dens_soft" strategy="auto" fragbias="density"
+         rms="%%rms%%" ncycles="200" fullatom="0" bbmove="1" nminsteps="25" temp="4" fraglens="7"
+         nfrags="25"/&gt;
+      &lt;CartesianSampler name="cen5_60" automode_scorecut="-0.3" scorefxn="cen"
+         mcscorefxn="cen" fascorefxn="dens_soft" strategy="auto" fragbias="density"
+         rms="%%rms%%" ncycles="200" fullatom="0" bbmove="1" nminsteps="25" temp="4" fraglens="7"
+         nfrags="25"/&gt;
+      &lt;CartesianSampler name="cen5_70" automode_scorecut="-0.1" scorefxn="cen"
+         mcscorefxn="cen" fascorefxn="dens_soft" strategy="auto" fragbias="density"
+         rms="%%rms%%" ncycles="200" fullatom="0" bbmove="1" nminsteps="25" temp="4" fraglens="7"
+         nfrags="25"/&gt;
+      &lt;CartesianSampler name="cen5_80" automode_scorecut="0.0" scorefxn="cen"
+         mcscorefxn="cen" fascorefxn="dens_soft" strategy="auto" fragbias="density"
+         rms="%%rms%%" ncycles="200" fullatom="0" bbmove="1" nminsteps="25" temp="4" fraglens="7"
+         nfrags="25"/&gt;
+
+      &lt;ReportFSC name="report" testmap="%%testmap%%" res_low="10.0" res_high="%%reso%%"/&gt;
+
+      &lt;BfactorFitting name="fit_bs" max_iter="50" wt_adp="0.0005" init="1" exact="1"/&gt;
+
+      &lt;FastRelax name="relaxcart" scorefxn="dens" repeats="1" cartesian="1"/&gt;
+   &lt;/MOVERS&gt;
+
+
+   &lt;PROTOCOLS&gt;
+      &lt;Add mover="setupsymm"/&gt;
+      &lt;Add mover="loaddens"/&gt;
+      &lt;Add mover="tocen"/&gt;
+      &lt;Add mover="cenmin"/&gt;
+      &lt;Add mover="relaxcart"/&gt;
+      &lt;Add mover="cen5_50"/&gt;
+      &lt;Add mover="relaxcart"/&gt;
+      &lt;Add mover="cen5_60"/&gt;
+      &lt;Add mover="relaxcart"/&gt;
+      &lt;Add mover="cen5_70"/&gt;
+      &lt;Add mover="relaxcart"/&gt;
+      &lt;Add mover="cen5_80"/&gt;
+      &lt;Add mover="relaxcart"/&gt;
+      &lt;Add mover="relaxcart"/&gt;
+      &lt;Add mover="report"/&gt;
+   &lt;/PROTOCOLS&gt;
+   &lt;OUTPUT scorefxn="dens"/&gt;
+
+&lt;/ROSETTASCRIPTS&gt;
+
+</code></pre></div></div>
+
+<p>In all three declared scorefunctions, symmetric=1 must be given. Additionally, the <code class="highlighter-rouge">SetupForDensityScoring</code> mover must be replaced with the <code class="highlighter-rouge">SetupForSymmetry</code> mover. Finally, the <code class="highlighter-rouge">MinMover</code> must be replaced with its symmetric counterpart, <code class="highlighter-rouge">SymMinMover</code>.
+The command for running this script is largely the same as before, with a few additions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">$ROSETTA3</span>/source/bin/rosetta_scripts.macosclangrelease <span class="se">\</span>
+  <span class="nt">-database</span> <span class="nv">$ROSETTA3</span>/database/ <span class="se">\</span>
+  <span class="nt">-in</span>::file::s 3j5p_transmem_A.pdb <span class="se">\</span>
+  <span class="nt">-parser</span>::protocol B2_symm_refine.xml <span class="se">\</span>
+  <span class="nt">-parser</span>::script_vars <span class="se">\</span>
+    <span class="nv">denswt</span><span class="o">=</span>35 <span class="nv">rms</span><span class="o">=</span>1.5 <span class="nv">reso</span><span class="o">=</span>3.4 <span class="nv">map</span><span class="o">=</span>half1_34A.mrc <span class="nv">testmap</span><span class="o">=</span>half2_34A.mrc <span class="nv">symmdef</span><span class="o">=</span>TRPV1_edit.symm <span class="se">\</span>
+  <span class="nt">-ignore_unrecognized_res</span> <span class="se">\</span>
+  <span class="nt">-score_symm_complex</span> <span class="nb">false</span> <span class="se">\</span>
+  <span class="nt">-edensity</span>::mapreso 3.4 <span class="se">\</span>
+  <span class="nt">-default_max_cycles</span> 200 <span class="se">\</span>
+  <span class="nt">-edensity</span>::cryoem_scatterers <span class="se">\</span>
+  <span class="nt">-beta</span> <span class="se">\</span>
+  <span class="nt">-out</span>::suffix _symm <span class="se">\</span>
+  <span class="nt">-crystal_refine</span>
+
+</code></pre></div></div>
+
+<p>The command symmdef=TRPV1_edit.symm passes the symmetry definition file to Rosetta.  The flag 
+<code class="highlighter-rouge">-score_symm_complex</code> false depends on whether strategy (a) or (b) was employed above.  If (a), then false should be used; if (b), then true should be used.</p>
+
+<p>Note: The input PDB (<code class="highlighter-rouge">-in::file::s</code>) is of the monomer (that is, the asymmetric unit).</p>
+
+
+
+    <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2019 Dimaio lab. All rights reserved. <br />
+ Site last generated: Oct 20, 2019 <br />
+<p><img src="images/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>

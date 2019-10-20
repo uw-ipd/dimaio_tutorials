@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=",  completing partial ES enumerative sampling experimental cryo model density">
+<title>Completing partial models guided by experimental density data | Dimaio lab CryoEM tutorials</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme-blue.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="documentation_test" href="http://0.0.0.0:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> Dimaio lab CryoEM tutorials</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li>
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="https://github.com/tomjoht/documentation-theme-jekyll" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Completing partial models guided by experimental density data">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Dimaio lab tutorials 1.0</li>
+  
+  
+  
+  <li>
+      <a title="Rosetta & cryoEM tutorial" href="#">Rosetta & cryoEM tutorial</a>
+      <ul>
+          
+          
+          
+          <li><a title="" href="index.html"></a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Rosetta & CryoEM basics" href="001_basics_main.html">Rosetta & CryoEM basics</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Model refinement" href="002_refinement_main.html">Model refinement</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Model rebuilding" href="003_rebuilding_main.html">Model rebuilding</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="De-novo modeling" href="004_denovo_main.html">De-novo modeling</a></li>
+          
+          
+          
+          
+          
+          
+          <li class="active"><a title="Rebuilding long segments" href="005_ES_main.html">Rebuilding long segments</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">Completing partial models guided by experimental density data</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+    
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    
+
+
+    
+
+    <a target="_blank" rel="noopener" href="https://github.com/danpf/documentation_test/blob/master/docs/pages/005_ES/005_ES_main.md" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
+
+    
+
+   <p>While the previous workflows have address model building and model refinement, none of the
+aforementioned tools deal with completion of large segments of protein. These may arise in several cases:</p>
+
+<ol>
+  <li>Homology models (particularly distant ones) may have large insertions, or even entire domains that are lacking.</li>
+  <li>The models produced from <code class="highlighter-rouge">denovo_density</code> may be missing significant fractions of the backbone</li>
+  <li>It may be difficult to manually trace long stretches of low local resolution into density</li>
+</ol>
+
+<p>To address these issues, we have developed a tool called Rosetta Enumerative Sampling, which uses a
+ensemble search algorithm to determine a large number of conformations that are both consistent with the
+density and the Rosetta energy function. This tool can be used on a partial models from the <code class="highlighter-rouge">denovo_denisty</code>
+application, an incomplete homology model, or any other starting structure.</p>
+
+<p>RosettaES runs best when working with data at resolutions 5 Å or better with segments to rebuild shorter
+than 50 residues. However, with very large amounts of sampling (e.g., ensemble sizes &gt; 250), reliable
+models may be produced with segments longer than 100 residues. At resolutions worse than 5 Å, this tool
+may be unreliable. The method can be used on both segmented and unsegmented density maps, however,
+removal of density belonging to parts of the structure not being modeled may improve results.</p>
+
+<p>RosettaES model building consists of three steps. Initially, a preparation step builds the fragments that are
+to be used in conformational sampling. Then a rebuilding step will identify each unassigned segment in the
+initial model and build an ensemble of possible solutions for each. Finally, a combination step finds all the
+consistent subsets of interactions, and refines all such models (if there is only one segment, the script simply
+refines all structures in the ensemble). In this combination step, if assembly fails to find a consistent set of
+solutions, an additional round of sampling will be carried out, forcing different solutions than the previous
+model.</p>
+
+<p>Compared to the other sections, the workflow is a bit more complicated when extended to multiple compute
+cores. To handle job distribution we have included a python script RunRosettaES.py that manages this job
+distribution among available CPUs on a single machine. (The script is included as part of Rosetta, in
+<code class="highlighter-rouge">/main/source/scripts/python/public/EnumerativeSampling</code>, as well as in this tutorial). For dealing with
+job schedulers or clusters incompatible with this script, section 5E gives an overview of job distribution with
+RosettaES.</p>
+
+<h2 id="step-5a-fragment-picking">Step 5A. Fragment Picking</h2>
+
+<p>The first step – much like Scenario 4 – involves selection of “fragment files,” which predict backbone
+conformation from local sequence. Unlike Scenario 4, we have a custom algorithm for fragment picking.
+These fragments will need to be generated before running RosettaES; the following command will generate
+these files (<code class="highlighter-rouge">5_rosettaES/A_PickFragments.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">$ROSETTA3</span>/source/bin/grower_prep.default.macosclangrelease 
+    <span class="nt">-pdb</span> input.pdb <span class="se">\</span>
+    <span class="nt">-in</span>::file::fasta t20sA.fasta <span class="se">\</span>
+    <span class="nt">-fragsizes</span> 3 9 <span class="se">\</span>
+    <span class="nt">-fragamounts</span> 100 20 <span class="se">\</span>
+
+</code></pre></div></div>
+
+<p>This will generate 100 3 residue fragments and 20 9 residue fragments, named 100.3mers and 20.9mers,
+that are then used in subsequent steps of the rebuilding process.</p>
+
+<h2 id="step-5b-generate-possible-conformations-for-each-segment">Step 5B. Generate Possible Conformations For Each Segment</h2>
+
+<p>The grower considers assigning positions for each unassigned segment of density (that is, each stretch of
+amino acids present in the fasta file but missing from the input structure). Each segment is referred to using
+a segment id, in which each segment is numbered from N- to C-terminus (with multiple chains given in order
+in the input fasta file). The script is run in two parts: first, the script is run once for each segment to rebuild;
+then, the script is run in “assembly mode” given the outputs produced by rebuilding each segment
+individually. Thus, for rebuilding the two segments in the test case, the script is called three times: once to
+build each segment, and once to assemble the results.</p>
+
+<p>In the first step, we perform conformational sampling of each of the two segments, generating an ensemble
+of putative solutions for each. This can be done calling the command (<code class="highlighter-rouge">5_rosettaES/B1_SampleSegment1.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+python <span class="nv">$ROSETTA3</span>/source/scripts/python/public/EnumerativeSampling/RunRosettaES.py <span class="se">\</span>
+    <span class="nt">-rs</span> runES.sh <span class="se">\</span>
+    <span class="nt">-x</span> RosettaES.xml <span class="se">\</span>
+    <span class="nt">-f</span> t20sA.fasta <span class="se">\</span>
+    <span class="nt">-p</span> input.pdb <span class="se">\</span>
+    <span class="nt">-d</span> T20S_48A_alpha_chainA.mrc <span class="se">\</span>
+    <span class="nt">-l</span> 1<span class="se">\</span>
+    <span class="nt">-c</span> 16<span class="se">\</span>
+    <span class="nt">-n</span> loop_1<span class="se">\</span>
+
+</code></pre></div></div>
+
+<p>The arguments to this program are as follows:</p>
+<ul>
+  <li><code class="highlighter-rouge">-rs runES.sh</code> - the script that is launched on each core and contains Rosetta flags and inputs</li>
+  <li><code class="highlighter-rouge">-x RosettaES.xml</code> - the XML script describing parameters for conformational sampling (see below)</li>
+  <li><code class="highlighter-rouge">-f t20sA.fasta</code> - the input fasta file (with chainbreaks specified by ‘/’)</li>
+  <li><code class="highlighter-rouge">-p input.pdb</code> - the input pdb file. This needs to match the input sequence, and all residues present in the fasta but absent in the PDB will get built.</li>
+  <li><code class="highlighter-rouge">-d T20S_48A_alpha_chainA.mrc</code> - the input density map</li>
+  <li><code class="highlighter-rouge">-l 1</code> - the segment id of the segment to rebuild. This command should be called once for each segment to rebuild, varying this argument from 1 to N</li>
+  <li><code class="highlighter-rouge">-c 16</code> - the number of compute cores to use</li>
+  <li><code class="highlighter-rouge">-n loop_1</code> - the output tag for this job (results will be placed in a folder with this name). Tags should be unique for each segment.</li>
+</ul>
+
+<p>The input XML file exposes key parameters for conformational sampling. In the tutorial, this file,
+<code class="highlighter-rouge">5_rosettaES/RosettaES.xml</code>, contains a block:</p>
+
+<pre>
+<code>
+...
+	&lt;FragmentExtension name="ext" fasta="full.fasta" scorefxn="dens"
+	censcorefxn="cendens" <b>beamwidth="32"</b> dumpbeam="0" <b>samplesheets="1"</b> read_from_file="0"
+	continuous_weight="0.3" looporder="1" <b>comparatorrounds=”100” windowdensweight=”30”</b>
+	readbeams="%%readbeams%%" storedbeams="%%beams%%"
+	steps="%%steps%%" pcount="%%pcount%%" filterprevious="%%filterprevious%%"
+	filterbeams="%%filterbeams%%"&gt;
+		&lt;Fragments fragfile="100.3mers"/&gt;
+		&lt;Fragments fragfile="20.9mers"/&gt;
+	&lt;/FragmentExtension&gt;
+...
+
+</code>
+</pre>
+
+<p>The sampling behavior of RosettaES is controlled by the block above. Many of the tags in this block – fasta,
+dumpbeam, read_from_file, storedbeams, steps, pcount, filterprevious, comparitorrounds, and filterbeams – are
+used by the job distribution script to pass results from one step to the next, and they should be left as-is.
+Others are user-specified, and can be modified based on the size of the loop and resolution of the data:</p>
+<ul>
+  <li><code class="highlighter-rouge">beamwidth</code>: controls the maximum number of solutions to be held at each step. Setting the value higher will increase run time but may improve accuracy.</li>
+  <li><code class="highlighter-rouge">windowdensweight</code>: the relative contribution of density in model selection</li>
+</ul>
+
+<p>For many cases, the default parameters are sufficient. However, if the segment to grow is long (50+
+residues), you may need to increase beamwidth; if the density is low resolution, you might need to decrease
+<code class="highlighter-rouge">windowdensweight</code> to 15 or 20.</p>
+
+<p>Several options should rarely be modified, but may need to be in specific cases:</p>
+<ul>
+  <li><code class="highlighter-rouge">samplesheets</code>: Controls whether or not beta sheet sampling should be performed. It is recommended to use this except when working with symmetric systems.</li>
+  <li><code class="highlighter-rouge">continuous_weight</code>: Controls the penalty on discontinuous density.
+    <ul>
+      <li>Setting this value to 1 will completely remove any penalty on discontinuous density;</li>
+      <li>setting it closer to 0 will increase the penalty. You may wish to raise this value to 0.7 (or more) if you anticipate the segment you are trying to model does not follow a continuous path of density.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Finally, the option <code class="highlighter-rouge">comparitorrounds</code> is used in multi-segment assembly (see section 5C)</p>
+
+<p>After running the script with this XML, there are two important intermediate output files, placed in the folder
+<code class="highlighter-rouge">loop_1</code> (the argument to -n):</p>
+<ul>
+  <li><code class="highlighter-rouge">.lps</code> (for loop partial solution) files, which are then combined in step 5C, in cases where there are multiple segments to model</li>
+  <li><code class="highlighter-rouge">taboo/beamX.txt</code> files, where X corresponds to the number of residues added to the segment. These are generated as the search adds residues, and are used to pass information from one step to the next (as additional residues are added in a single segment).</li>
+</ul>
+
+<p><strong>Note</strong>: This process should then be repeated for all remaining segments to rebuild In the tutorial, the
+command <code class="highlighter-rouge">5_rosettaES/B2_SampleSegment2.sh</code> builds conformations for the second segment in this file. All
+segments can be sampled independently of one another, so if many compute nodes are available, each
+segment can be sampled simultaneously on separate nodes.</p>
+
+<p>Finally, while in most cases, users will want to take these models into the assembly step (part 5C), if there is
+only one segment to rebuild, or if the sampling results want to be inspected, the final output ensemble can be
+saved as PDB files with the command (<code class="highlighter-rouge">5_rosettaES/B1.2_InspectIntermediates.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+python <span class="nv">$ROSETTA3</span>/source/scripts/python/public/EnumerativeSampling/RunRosettaES.py<span class="se">\</span>
+    <span class="nt">-rs</span> runES.sh <span class="se">\</span>
+    <span class="nt">-x</span> RosettaES.xml <span class="se">\</span>
+    <span class="nt">-f</span> t20sA.fasta <span class="se">\</span>
+    <span class="nt">-p</span> input.pdb <span class="se">\</span>
+    <span class="nt">-d</span> T20S_48A_alpha_chainA.mrc <span class="se">\</span>
+    <span class="nt">-l</span> 1<span class="se">\</span>
+    <span class="nt">-db</span> loop_1/taboo/beam5.txt<span class="se">\</span>
+
+</code></pre></div></div>
+
+<p>Note, the number of the beam file (17) corresponds to the total number of residues built. Intermediate
+results (after growing N residues) can be inspected by changing this to a lower number (e.g., beam14.txt
+shows solutions after 14 of the 17 residues have been rebuilt).</p>
+
+<h2 id="step-5c-find-a-set-of-consistent-conformations">Step 5C. Find a set of consistent conformations.</h2>
+
+<p>In cases where there are multiple interacting segments, we want to find all nonclashing combinations. This
+step will take the loop partial solution (lps) files generated in step B and use a Monte Carlo Assembly (MCA)
+algorithm in order to identify sets of solutions that are self-consistent. This section assumes that all
+missing segments have been built in step B. To run this assembly, we perform conformational sampling
+using the script, passing the .lps files generated in step B (<code class="highlighter-rouge">5_rosettaES/C_AssembleResults.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+python <span class="nv">$ROSETTA3</span>/source/scripts/python/public/EnumerativeSampling/RunRosettaES.py<span class="se">\</span>
+    <span class="nt">-x</span> RosettaES.xml <span class="se">\</span>
+    <span class="nt">-f</span> t20sA.fasta <span class="se">\</span>
+    <span class="nt">-p</span> input.pdb <span class="se">\</span>
+    <span class="nt">-d</span> T20S_48A_alpha_chainA.mrc <span class="se">\</span>
+    <span class="nt">-lps</span> loop_<span class="k">*</span>/lps<span class="k">*</span>.txt
+
+</code></pre></div></div>
+
+<p>The flag -lps points to the outputs of the individual segment jobs’ output. As before, the script will use (and
+modify) an input XML file. For assembly, only a single parameter is important to modify:
+comparatorrounds=”100”. This parameter controls the number of Monte Carlo trajectories (it is unlikely you
+will need to change this parameter).</p>
+
+<p>The output of this step is PDB files, that will be placed in the working directory with the prefix
+<code class="highlighter-rouge">aftercomparator_RRR_XXX.pdb</code>, where RRR is the trajectory id, and XXX is the energy. A text file
+recommendation.txt will be written that reports the clash score of the best model.</p>
+
+<p><strong>If the number in recommendation.txt is above +100</strong> it is recommend you perform additional rounds of
+sampling. To do so, additional potential solutions should be sampled by repeating step B and providing the
+same directory name as input, without deleting the intermediate files. The script will then enter that
+directory and use the already-computed solutions (stored in the folder “taboo”) to guide sampling toward
+previously unexplored regions. See section D for more details.</p>
+
+<p><strong>If the number in recommendation.txt is below +100</strong>, then models should be run through Rosetta
+refinement to accurately rank them. That can be done using this command (<code class="highlighter-rouge">5_rosettaES/D_RefineOutput.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+python <span class="nv">$ROSETTA3</span>/source/scripts/python/public/EnumerativeSampling/RunRosettaES.py<span class="se">\</span>
+    <span class="nt">-f</span> t20sA.fasta <span class="se">\</span>
+    <span class="nt">-p</span> input.pdb <span class="se">\</span>
+    <span class="nt">-d</span> T20S_48A_alpha_chainA.mrc <span class="se">\</span>
+    <span class="nt">-c</span> 16 <span class="se">\</span>
+    <span class="nt">-rp</span> aftercomparator_<span class="k">*</span>.pdb <span class="se">\</span>
+    <span class="nt">-rlxs</span> runrelax.sh
+
+</code></pre></div></div>
+
+<p>Where runrelax.sh contains a command for relaxing structures in Rosetta.</p>
+
+<h2 id="step-5d-interpreting-results">Step 5D. Interpreting results</h2>
+
+<p>RosettaES will produce a 100 models as output (or whatever is specified in comparatorrounds), with scores
+in the file score.sc. When first looking at the output from a run, it is good to visually inspect the lowest-
+energy 5-10 structures. Ideally, these lowest-energy models will be very tightly converged, but the lack of
+convergence does not indicate failure in sampling, and the presence of convergence does not necessary
+indicate the solution is correct. Instead, the lowest-scoring models should be examined with attention to the
+following:</p>
+
+<p>Insufficient sampling. Models should initially be inspected for clearly incorrect features that might not have
+been properly penalized by Rosetta. These include:</p>
+<ul>
+  <li>unexplained density, particularly small sidechains placed into a large density protrusions</li>
+  <li>regions with poor fit to density</li>
+  <li>unresolved clashes</li>
+</ul>
+
+<p>If these features are present in the lowest-energy models, it suggests that the conformational sampling
+performed by RosettaES may not have been sufficient. There are several ways to address this issue. The first
+is to increase conformational sampling. This can be done by either: a) increased the beamwidth parameter
+and rerunning anew, b) and/or performing additional rounds of taboo search (taboo sampling occurs
+automatically if the “taboo/” folder in the running directory is populated with beam files”), or c) reducing the
+search space by eliminating regions of density.</p>
+
+<p>The latter can also be performed by manually removing parts of the map you do not wish to sample or by
+including additional portions of the model, for example if you are building a model that has 4 missing regions
+and you believe you have accurately sampled 3 of them (they do not posses any of the pathologies listed
+above and fit the density well), you can combine them by treating them as templates for RosettaCM (use a
+fasta file with the missing segment removed) and use the result as input for RosettaES to build the last
+region.</p>
+
+<p>Unresolved residues. RosettaES will always attempt to build all residues present in the fasta file, however, in
+many cases not all residues will be resolved in the map (particularly at termini). Because RosettaES will
+heavily penalize models that do not fit the density, you will often find models that are “overly compacted” at
+termini or internal loops, to try to squeeze these residues into density.</p>
+
+<p>If this happens at termini it is suggested that you examine intermediate structures that have yet to attempt to
+assign these unresolved residues in order to find a good model. If this happens internally (or if you have a
+good idea a priori what residues should be modeled), these regions can be removed from the input fasta. If
+internal segments are deleted, <strong>be sure to treat the deletion correctly, by putting a ‘/’ in the fasta file.</strong></p>
+
+<h2 id="step-5e-customizing-job-distribution">Step 5E. Customizing job distribution.</h2>
+<p>Job distribution in RosettaES is complicated, since each “growing step” can be parallelized, but subsequent
+steps need all the information from the previous step. Consequently, the script provided (RosettaES.py)
+manages jobs, by calling Rosetta jobs at each round, collecting and combining the results of the previous
+round, then splitting input files for the next round. On systems where it is not possible to run this script, this
+section describes in some detail what the script is doing.</p>
+
+<p>To manage this the python script uses the provided XML file as input, rewriting several parameters
+depending on the protocol step. These varying parameters include:</p>
+<ul>
+  <li><code class="highlighter-rouge">readbeams</code>, a boolean option that tells Rosetta whether it should load intermediate solutions</li>
+  <li><code class="highlighter-rouge">beamfile</code>, the name of the beamfile that stores the intermediate solutions</li>
+  <li><code class="highlighter-rouge">steps</code>, how many residues to add (0 means only do filtering, otherwise set to 1, setting to “-1” will build all missing residues)</li>
+  <li><code class="highlighter-rouge">pcount</code>, used to uniquely tag output files from each core</li>
+  <li><code class="highlighter-rouge">filterprevious</code>, a boolean option that controls whether intermediate solutions should be read for taboo search</li>
+  <li><code class="highlighter-rouge">filterbeams</code>, the filename of the intermediate solutions for use in taboo.</li>
+</ul>
+
+<p>In order to build a missing segment the script will perform the following steps:</p>
+
+<p>Launch a job with</p>
+<ol>
+  <li>readbeams=”0”, beamfile=”na”, steps=”1”, pcount=”1”, filterprevious=”0”, filterbeams=”na”. This will produce a file named beam1.1.txt from Rosetta.</li>
+  <li>Parse the beam1.1.txt file and split into N files (where N is the number of parallel jobs to run). New files are labeled beam_$r.$i.txt where $r is the number of residues added so far, and $i ranges from 1 to N.</li>
+  <li>Submit N rosetta jobs with pcount set as the job number, readbeams set to “true”, and beamfile set to the corresponding output of step 2.</li>
+  <li>Output files are parsed by the script and compiled into a single file with the name beam$r.txt, with $r the number of residues grown.</li>
+  <li>Rosetta is run on a single core to filter the aggregate solution set. Here, readbeams=”1”, beamfile=”beam$r.txt”, and steps=”0”. A file named beam_0.txt will have the filtered results.</li>
+  <li>Repeat steps 2-6 using the <code class="highlighter-rouge">beam_0.txt</code> as the input for step 2. This is done until the segment is complete and Rosetta produces an empty file called finished.txt. The presence of this file triggers the program to perform one final round of filtering and exit.</li>
+</ol>
+
+<p>The last step of RosettaES will additionally produce a file with the name <code class="highlighter-rouge">lpsfile_$s.0.txt</code> used for assembly.
+To run assembly with these files first combine them into a single file, described below, and run with
+readfromfile=”filename”. This new file should start with the a number corresponding to the total number of
+missing segments, then for each missing segment provide a number for the total solutions in that segmented
+followed by the solution information contained in the lpsfile_$s.0.txt described above. Segments should be
+arranged to match the order in which they occur in the fasta.</p>
+
+
+
+    <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2019 Dimaio lab. All rights reserved. <br />
+ Site last generated: Oct 20, 2019 <br />
+<p><img src="images/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+# This is your sidebar TOC. The sidebar code loops through sections here and provides the appropriate formatting.
+
+entries:
+- title: sidebar
+  product: Dimaio lab tutorials
+  version: 1.0
+  folders:
+
+  - title: Rosetta & cryoEM tutorial
+    output: web, pdf
+    type: frontmatter
+    folderitems:
+    - title:
+      url: /index.html
+      output: web, pdf
+      type: homepage
+
+    - title: Rosetta & CryoEM basics
+      url: /001_basics_main.html
+      output: web, pdf
+      type: frontmatter
+
+    - title: Model refinement
+      url: /002_refinement_main.html
+      output: web, pdf
+      type: frontmatter
+
+    - title: Model rebuilding
+      url: /003_rebuilding_main.html
+      output: web, pdf
+      type: frontmatter
+
+    - title: De-novo modeling
+      url: /004_denovo_main.html
+      output: web, pdf
+      type: frontmatter
+
+    - title: Rebuilding long segments
+      url: /005_ES_main.html
+      output: web, pdf
+      type: frontmatter

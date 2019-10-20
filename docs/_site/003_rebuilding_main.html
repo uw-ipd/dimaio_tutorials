@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=",  rebuild experimental cryo model">
+<title>Model rebuilding guided by experimental density data | Dimaio lab CryoEM tutorials</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme-blue.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="documentation_test" href="http://0.0.0.0:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> Dimaio lab CryoEM tutorials</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li>
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="https://github.com/tomjoht/documentation-theme-jekyll" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Model rebuilding guided by experimental density data">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Dimaio lab tutorials 1.0</li>
+  
+  
+  
+  <li>
+      <a title="Rosetta & cryoEM tutorial" href="#">Rosetta & cryoEM tutorial</a>
+      <ul>
+          
+          
+          
+          <li><a title="" href="index.html"></a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Rosetta & CryoEM basics" href="001_basics_main.html">Rosetta & CryoEM basics</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Model refinement" href="002_refinement_main.html">Model refinement</a></li>
+          
+          
+          
+          
+          
+          
+          <li class="active"><a title="Model rebuilding" href="003_rebuilding_main.html">Model rebuilding</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="De-novo modeling" href="004_denovo_main.html">De-novo modeling</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Rebuilding long segments" href="005_ES_main.html">Rebuilding long segments</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">Model rebuilding guided by experimental density data</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+    
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    
+
+
+    
+
+    <a target="_blank" rel="noopener" href="https://github.com/danpf/documentation_test/blob/master/docs/pages/003_rebuilding/003_rebuilding_main.md" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
+
+    
+
+   <p>In this scenario, we introduce a tool, RosettaCM, for building missing portions of a model guided by density data. While primarily geared towards comparative modeling, it may also be useful for building portions of a protein that are disordered when crystallized or difficult regions in hand-built models. In this scenario, we introduce the basic rebuilding protocol, then show how the tool may also be used to:</p>
+
+<ul>
+  <li>Combine pieces from multiple template models guided by density</li>
+  <li>Rebuild with user-defined restraints</li>
+  <li>Iteratively rebuild models in difficult cases difficult cases</li>
+</ul>
+
+<p>As a running example, we use the 20S proteasome (Xueming Li et al., Nature Methods, 2013), where only a subset of particles were used, resulting in a 4.1Å reconstruction. We are building models starting from a homologous structure (pdb id: 1iru) as the starting model (25%/32% sequence identity to chains A/B).</p>
+
+<h2 id="3a-preparing-templates-for-use-in-rosettacm">3A: Preparing templates for use in RosettaCM</h2>
+
+<p>In many cases, much of the setup work is handled by a script, <code class="highlighter-rouge">setup_RosettaCM.py</code> in RosettaTools (a separate repository available from rosettacommons.org). This script takes an input alignment in a variety of formats, and prepares the inputs automatically. It is executed by running the command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python setup_RosettaCM.py \
+	--fasta t20s.fasta \
+	--alignment tmpl.fasta \
+	--alignment_format fasta \
+	--templates tmpl.pdb \
+	--rosetta_bin ~/Rosetta/main/source/bin \
+	--verbose
+</code></pre></div></div>
+
+<p>Inputs include the full-length fasta, an alignment file -in either fasta, ClustalW, or HHSearchformat -and the corresponding template PDB files. This script will prepare all the necessary inputs in order to run RosettaCM.</p>
+
+<p>Alternately, the setup may be performed manually. In this case, since we are using some nonstandard features (symmetry and density),and we have two chains in the asymmetric unit we will do this; alternately, the inputs from the previous step may be used as a starting point and subsequently modified. In this case, we firstconvert our alignment to Rosetta format (scenario2_model_rebuilding/20S_1iru.ali):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## 1XXX_ 1iruAH_thread
+# hhsearch
+scores_from_program: 0 1.00
+0 TVFSPDGRLFQVEYAREAVKK-GSTALGMKFANGVLLISDKKVRSRLIEQNSIEKIQLIDDYVAAVTSGLVADAR...
+0 TIFSPEGRLYQVEYAFKAINQGGLTSVAVRGKDCAVIVTQKKVPDKLLDSSTVTHLFKITENIGCVMTGMTADSR...
+--
+</code></pre></div></div>
+
+<p>In this format, the first line is ‘##’ followed by a code for the target and one for the template.</p>
+
+<p>The second line identifies the source of the alignment; the third just keep as it is.</p>
+
+<p>The fourth line is the target sequence and the fifth is the template; the number is an ‘offset’, identifying where the sequence starts. However, the number doesn’t use the PDB resid but just counts residues starting at 0.</p>
+
+<p>The sixth line is ‘–’. Multiple alignments may be concatenated in a single file, with the templatecode identifying the template corresponding to each alignment. RosettaCM takes as inputs partially threaded models, that is models where aligned positions have their residue identities remapped, and unaligned residues are not present.</p>
+
+<p>To generate these models from an alignment file and template, we can run the Rosetta command (<code class="highlighter-rouge">3_model_rebuilding/A_partialthread.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">$ROSETTA3</span>/source/bin/partial_thread.macosclangrelease <span class="se">\</span>
+ <span class="nt">-database</span> <span class="nv">$ROSETTA3</span>/database/ <span class="se">\</span>
+ <span class="nt">-in</span>::file::fasta t20s.fasta <span class="se">\</span>
+ <span class="nt">-in</span>::file::alignment 20S_1iru.ali <span class="se">\</span>
+ <span class="nt">-in</span>::file::template_pdb 1iruAH_aln.pdb
+
+</code></pre></div></div>
+
+<p>This will output a partially threaded model in <code class="highlighter-rouge">1iruA_thread.pdb</code> that is correctly numbered for input into RosettaCM.  Next, we need to set up symmetric modeling with RosettaCM. As in Scenario 1, we use the <code class="highlighter-rouge">make_symmdef_file.pl</code> script in order to generate a symmetry definition file for use in Rosetta. A straightforward way to do so is to use Chimera to dock the necessary chains into density.</p>
+
+<p>We need a single “primary chain” and a couple of an adjacent chain in each point group; since the proteasome features D7 symmetry, that means we need an adjacent chain in the 7-fold complex, as well as a chain in the opposite ring. An example has been created in scenario <code class="highlighter-rouge">2_model_rebuilding/setup_symm.pdb</code> where three copies of the threaded model have been docked into density with Chimera. To generate our D7 symmetry file from this input, we then simply have to run the command (<code class="highlighter-rouge">3_model_rebuilding/B_make_symmdef.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">$ROSETTA3</span>/source/src/apps/public/symmetry/make_symmdef_file.pl <span class="se">\</span>
+ <span class="nt">-m</span> NCS <span class="nt">-a</span> A <span class="nt">-i</span> B C <span class="se">\</span>
+ <span class="nt">-p</span> setup_symm.pdb <span class="nt">-r</span> 1000 <span class="o">&gt;</span> D7.symm
+
+</code></pre></div></div>
+
+<p>Since we have already created the input templates using the <code class="highlighter-rouge">partial_thread</code> application, we can ignore the <code class="highlighter-rouge">setup_symm_INPUT.pdb</code> file and use the output of partial thread as the input. However, we still need to align all the threaded models to this input structure. This can either be done with the program TMalign (external to Rosetta) or by using Chimera to dock the individual threaded models into density. In this case, where we have just one template, it has already been aligned to the template in <code class="highlighter-rouge">scenario2_model_rebuilding/tmpl_thread_aln.pdb</code>.  As in Scenario 1, we need to make a small edit to the symmetry definition file for density refinement. Change the following lines:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set_dof JUMP0_0_to_com x(35.3434689631743)
+set_dof JUMP0_0_to_subunit angle_x angle_y angle_z
+set_dof JUMP0_0 x(39.2905097135684) angle_x
+</code></pre></div></div>
+
+<p>To (<code class="highlighter-rouge">3_model_rebuilding/D7_edit.symm</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set_dof JUMP0_0_to_com x y z
+set_dof JUMP0_0_to_subunit angle_x angle_y angle_z
+</code></pre></div></div>
+
+<p><em>Note:</em> The 20S proteasome case we are using contains two chains in the asymmetric unit. To specify this as inputs to RosettaCM, we need to list the fasta file, <em>separating the chains by the slash character</em> ‘/’. This is really only necessary in the fasta provided as input to RosettaCM (next step) however, there is no harm is doing this in every step.</p>
+
+<h2 id="running-rosettacm-using-a-single-template-model-as-input">Running RosettaCM using a single template model as input.</h2>
+
+<p>Like the methods introduced in Scenario 1, RosettaCM is controlled through an XML script using RosettaScripts. The XML is as follows (<code class="highlighter-rouge">3_model_rebuilding/C_rosettaCM_singletarget.xml</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ROSETTASCRIPTS&gt;
+    &lt;TASKOPERATIONS&gt;
+    &lt;/TASKOPERATIONS&gt;
+    &lt;SCOREFXNS&gt;
+        &lt;ScoreFunction name="stage1" weights="score3" symmetric="1"&gt;
+            &lt;Reweight scoretype="atom_pair_constraint" weight="0.1"/&gt;
+            &lt;Reweight scoretype="elec_dens_fast" weight="10"/&gt;
+        &lt;/ScoreFunction&gt;
+        &lt;ScoreFunction name="stage2" weights="score4_smooth_cart" symmetric="1"&gt;
+            &lt;Reweight scoretype="atom_pair_constraint" weight="0.1"/&gt;
+            &lt;Reweight scoretype="elec_dens_fast" weight="10"/&gt;
+        &lt;/ScoreFunction&gt;
+        &lt;ScoreFunction name="fullatom" weights="beta_cart" symmetric="1"&gt;
+            &lt;Reweight scoretype="atom_pair_constraint" weight="0.1"/&gt;
+            &lt;Reweight scoretype="elec_dens_fast" weight="35"/&gt;
+			&lt;Set scale_sc_dens_byres="R:0.76,K:0.76,E:0.76,D:0.76,M:0.76,C:0.81,Q:0.81,H:0.81,N:0.81,T:0.81,S:0.81,Y:0.88,W:0.88,A:0.88,F:0.88,P:0.88,I:0.88,L:0.88,V:0.88"/&gt;
+        &lt;/ScoreFunction&gt;
+    &lt;/SCOREFXNS&gt;
+    &lt;FILTERS&gt;
+    &lt;/FILTERS&gt;
+    &lt;MOVERS&gt;
+        &lt;Hybridize name="hybridize" stage1_scorefxn="stage1" stage2_scorefxn="stage2" fa_scorefxn="fullatom"  batch="1" stage1_increase_cycles="1.0" stage2_increase_cycles="1.0" linmin_only="0" realign_domains="0"&gt;
+            &lt;Template pdb="1iruA_thread.pdb" weight="1.0" cst_file="AUTO" symmdef="D7_edit.symm"/&gt;
+        &lt;/Hybridize&gt;
+    &lt;/MOVERS&gt;
+    &lt;PROTOCOLS&gt;
+        &lt;Add mover="hybridize"/&gt;
+    &lt;/PROTOCOLS&gt;
+
+&lt;/ROSETTASCRIPTS&gt;
+
+</code></pre></div></div>
+
+<p>The main work is done through a single mover, Hybridize which handles all stages of model-building. Input structures are specified via Template lines (in this case there is only one). For each template line, we specify the pdb input, as well as a couple of other parameters: a weight (the relative frequency we sample each template with); a constraint file (setting this to “auto”sets up automatic constraints to the template, while setting this to “none”turns off all constraints, user-defined constraints are described later); and an (optional) symmetry definition file.Note: Be sure that your templates are aligned to the density!Given this XML, RosettaCM is then run with the following command line (3_model_rebuilding/B1_rosettaCM_singletarget.sh):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ROSETTA3/source/bin/rosetta_scripts.macosclangrelease \
+	-database $ROSETTA3/database/ \
+	-in:file:fasta t20s.fasta \
+	-parser:protocol C_rosettaCM_singletarget.xml \
+	-nstruct 50 \
+	-relax:jump_move true \
+	-relax:dualspace \
+	-out::suffix _singletgt \
+	-edensity::mapfile t20S_41A_half1.mrc \
+	-edensity::mapreso 5.0 \
+	-edensity::cryoem_scatterers \
+	-beta \
+	-default_max_cycles 200
+
+</code></pre></div></div>
+
+<p>The input command is similar to those seen before, but with a few key differences. First, the input to Rosetta
+isspecified with <code class="highlighter-rouge">-in:file:fasta</code> ratherthan <code class="highlighter-rouge">-in:file:s</code>. Also note that the input argument <code class="highlighter-rouge">-nstruct 50</code> is given, telling Rosetta to generate 50 models for each process.
+Generally, hundreds to thousands of modelsare necessary to sufficiently sample conformational space; more and longer regions to rebuild require more models.</p>
+
+<h2 id="running-without-symmetry">Running without symmetry</h2>
+
+<p>Running without symmetry requires only two small changes to the XML file:</p>
+
+<ul>
+  <li>Remove the tag:  <code class="highlighter-rouge">symmdef="D7_edit.symm"</code></li>
+  <li>Remove the three tags symmetric=1</li>
+</ul>
+
+<h2 id="job-distribution">Job distribution</h2>
+
+<p>As with section 2, a combination of <code class="highlighter-rouge">-out::suffix</code> and GNU parallel is useful for distributing jobs.  For example, one may replace the <code class="highlighter-rouge">-out::suffix</code> line above with <code class="highlighter-rouge">-out::suffix _$1</code>, then launch jobs with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel –j16 ./B1_rosettaCM_singletarget.sh {} ::: {1..16}
+</code></pre></div></div>
+
+<p>The total number of structures generatedis the number of structures specified with –nstructtimes the number of jobs launched (in this instance, 50 structure times 16 jobs = 800 structures).Depending on the runtime per structure (variable depending on structure size)and the number of CPUs available, both of these numbers may be adjusted.</p>
+
+<p>Finally, GNU parallel allows launching of jobs remotely if SSH keys have been set up for passwordless login.  To run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel –S 16/node1,16/node2,16/node3,16/node4 -–workdir . ./B1_rosettaCM_singletarget.sh {} ::: {1..48}
+</code></pre></div></div>
+
+<p>This will launch instead 48 jobs spread across four machines.  See the GNU parallel documentation for more information.</p>
+
+<h2 id="running-rosettacm-using-multiple-template-models-as-input">Running RosettaCM using multiple template models as input.</h2>
+
+<p>One of the strengths of RosettaCM is its ability to make use of multiple template structures, and to recombine portions of these models during conformational sampling. This is particularly useful when multiple homologous structures are available, some with closer sequence identity, and some with more complete coverage. The protocol allows the combination of features of both models.</p>
+
+<p>To make use of this feature, we simply add additional template lines in the input XML. In this case, we add the template 1ryp (<code class="highlighter-rouge">scenario3_model_rebuilding/C1_rosettaCM_multitarget.xml</code>)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+	&lt;Hybridize name="hybridize" stage1_scorefxn="stage1" stage2_scorefxn="stage2" 
+		fa_scorefxn="fullatom"  batch="1" stage1_increase_cycles="1.0"
+		stage2_increase_cycles="1.0" linmin_only="0" realign_domains="0"&gt;
+	&lt;Template pdb="1iruA_thread.pdb" weight="1.0"cst_file="auto" symmdef="D7_edit.symm"/&gt;
+	&lt;Template pdb="1rypA_thread.pdb" weight="1.0"cst_file="auto" symmdef="D7_edit.symm"/&gt;
+	&lt;/Hybridize&gt;
+...
+</code></pre></div></div>
+
+<p>The rest is handled automatically by the protocol. However, there are a few caveats when using multiple 
+input structures:</p>
+
+<ul>
+  <li>With density, we need to ensure that all input models are aligned to the density. This can be done using either <code class="highlighter-rouge">TMalign</code> <code class="highlighter-rouge">Chimera</code>’s alignment tools.</li>
+  <li>In each trajectory, a starting model is chosen at random; the constraints and symmetry from this selected model are chosen at the start of each run. <strong>If we wish to use a portion of a model, but do not want to use its symmetry or constraints, we can assign it a weight of 0</strong>: backbone conformations from this model will be used in conformational sampling, but the symmetry and constraints will never be used.</li>
+  <li>Similarly, gaps in the selected starting model are rebuilt before recombination occurs. <strong>If one of the templates has poor coverage, but provides valuable structural features, it should be used, but with weight 0</strong></li>
+</ul>
+
+<h2 id="running-rosettacm-with-user-specified-constraints">Running RosettaCM with user specified constraints.</h2>
+
+<p>Another strength of RosettaCM is the ability to make use of additional experimental information that provides restraints over conformational space. While previously, we have used <code class="highlighter-rouge">cst_file=auto</code> to automatically generate constraints from template structures, if experiments provide distance constraints (or some other positional restraint, wemay make use of them in model rebuilding as well.</p>
+
+<p>The Rosetta documentation provides a good overview of the types of constraints that may be used, with a number of different constraint types and functional forms possible. For this demo, we will assume we have knowledge on the distance between residues 107 and 143 that we want to use during rebuilding.</p>
+
+<p>This information can be encoded in a constraint file (<code class="highlighter-rouge">scenario3_model_rebuilding/D1_constraints.cst</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AtomPair CA 107 CA 143 HARMONIC 5.0 1.0
+</code></pre></div></div>
+
+<p>Note: The numbering of residues is based upon the order in the input fasta file (and does not reset between chains!).</p>
+
+<p>We then replace the cst_file=auto lines in the XML with our own constraint file (<code class="highlighter-rouge">scenario3_model_rebuilding/D1_constraints.xml</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+	&lt;Template pdb="tmpl_thread_aln.pdb" weight="1.0"
+		cst_file="D1_constraints.cst" symmdef="D7_edit.symm"/&gt;
+...
+</code></pre></div></div>
+
+<p>We can then rebuild and refine as before.</p>
+
+<h2 id="model-selection-and-running-rosettacm-iteratively">Model selection and running RosettaCM iteratively</h2>
+
+<p>With possibly hundreds of generated models, there are a few strategies to identify the best-sampled models. Generally, models should be filtered on two different criteria –the total score and the density score –in some way. We often select the best 10-20% of models based on total score, and the sort these models by density score, but visual inspection of the best by both criteria can often be beneficial in difficult cases.</p>
+
+<p>Finally, one strategy for solving difficult structures is to apply RosettaCM iteratively. Using the above criteria, we can select the best 5-10models from the first round of refinement, and feed them as inputs into the next round.Models can be selected by energy by looking at the score column in the output <code class="highlighter-rouge">.sc</code> files.</p>
+
+<p>This is very briefly illustrated in the following XML (<code class="highlighter-rouge">scenario3_model_rebuilding/E1_rosettaCM_iter.xml</code>):</p>
+
+<pre>
+<code>
+...
+	&lt;Hybridize name="hybridize" stage1_scorefxn="stage1" stage2_scorefxn="stage2"
+		fa_scorefxn="fullatom"batch="1"&gt;
+		&lt;Template pdb="<b>expected_outputs/S_multitgt_0001_A.pdb</b>" weight="1.0"
+			cst_file="NONE" symmdef="D7_edit.symm"/&gt;
+		&lt;Template pdb="<b>expected_outputs/S_multitgt_0002_A.pdb</b>" weight="1.0"
+			cst_file="NONE" symmdef="D7_edit.symm"/&gt;
+		&lt;Template pdb="<b>expected_outputs/S_multitgt_0003_A.pdb</b>" weight="1.0"
+			cst_file="NONE" symmdef="D7_edit.symm"/&gt;
+	&lt;/Hybridize&gt;
+...
+</code>
+</pre>
+
+<p>There is also some manipulation of input models that can prove beneficial. If one wants to force rebuilding some segment of backbone, they can simply delete those residues in all input models. Similarly if one wants to force some region to adopt a conformation taking in one input model, they can delete all other conformations from all models.</p>
+
+<h2 id="3f-running-with-ligands-andor-nucleic-acids">3F: Running with Ligands and/or Nucleic Acids</h2>
+
+<p>RosettaCM can be run with ligands as well as nucleic acids.While nucleic acids are read by Rosetta natively, ligands require an additional input to Rosetta, a <em>params</em> file.</p>
+
+<p>For ligands, a mol2 file of the ligand which contains hydrogen atoms is required.  The program <a href="http://openbabel.org/wiki/Main_Page">OpenBabel</a> is capable of both converting from PDB to mol2 as well as adding hydrogens to a molecule given a PDB file of the ligand.</p>
+
+<p>Given a mol2 file, <code class="highlighter-rouge">molfile_to_params.py</code>, included in Rosetta, at <code class="highlighter-rouge">$ROSETTA3/source/scripts/python/public/</code> will generate a params file.To use:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python $ROSETTA3/source/scripts/python/apps/public/molfile_to_params.py \
+	--keep-names --clobber -centroid XXX.mol2 -p XXX -n XXX
+</code></pre></div></div>
+<p>Replace “XXX” with the ligands three letter code.  This script willcreate an XXX.params fileas well as several other files.  This file can be passed into Rosetta using the flag:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-extra_res_fa XXX.fa.params
+-extra_res_cen XXX.cen.params
+</code></pre></div></div>
+
+<p>If there is more than one unique ligand, run the script on each unique ligand, and pass a list of params files using each of the flags.When modelling with ligands or nucleic acids in RosettaCM, two additional things are needed:1. The ligand or nucleic acids must be added to the END of each template file with a weight &gt; 02. An additional flag needs to get added to Hybridize:</p>
+
+<pre>
+<code>
+	&lt;Hybridize name="hybridize" stage1_scorefxn="stage1" stage2_scorefxn="stage2"
+		fa_scorefxn="fullatom"batch="1" <b>add_hetatm="1"</b>&gt;
+</code>
+</pre>
+
+
+    <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2019 Dimaio lab. All rights reserved. <br />
+ Site last generated: Oct 20, 2019 <br />
+<p><img src="images/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>

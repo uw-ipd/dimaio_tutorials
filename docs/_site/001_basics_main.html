@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=",  homepage">
+<title>Rosetta and electron density basics | Dimaio lab CryoEM tutorials</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme-blue.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="documentation_test" href="http://0.0.0.0:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> Dimaio lab CryoEM tutorials</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li>
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="https://github.com/tomjoht/documentation-theme-jekyll" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="Rosetta and electron density basics">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Dimaio lab tutorials 1.0</li>
+  
+  
+  
+  <li>
+      <a title="Rosetta & cryoEM tutorial" href="#">Rosetta & cryoEM tutorial</a>
+      <ul>
+          
+          
+          
+          <li><a title="" href="index.html"></a></li>
+          
+          
+          
+          
+          
+          
+          <li class="active"><a title="Rosetta & CryoEM basics" href="001_basics_main.html">Rosetta & CryoEM basics</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Model refinement" href="002_refinement_main.html">Model refinement</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Model rebuilding" href="003_rebuilding_main.html">Model rebuilding</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="De-novo modeling" href="004_denovo_main.html">De-novo modeling</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Rebuilding long segments" href="005_ES_main.html">Rebuilding long segments</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">Rosetta and electron density basics</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+    
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    
+
+
+    
+
+    <a target="_blank" rel="noopener" href="https://github.com/danpf/documentation_test/blob/master/docs/pages/001_basics/001_basics_main.md" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
+
+    
+
+   <p>This section provides a brief introduction to using Rosetta, and an overview of using density data within Rosetta.</p>
+<h1 id="overview-of-rosetta">Overview of Rosetta</h1>
+<p>The Rosetta documentation is a good source of additional information on several of the tools described in this document.  This is available at <a href="https://www.rosettacommons.org/docs/latest/Home">rosetta documentation homepage</a>.</p>
+
+<p>The tools described in this document use the RosettaScripts framework, <a href="https://www.rosettacommons.org/docs/latest/scripting_documentation/RosettaScripts/RosettaScripts">described here</a>.  Briefly, this allows protocols to be defined as a series of atomic “Movers” which manipulate a structure.  The format is as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ROSETTASCRIPTS&gt;
+    &lt;SCOREFXNS&gt;
+    &lt;/SCOREFXNS&gt;
+    &lt;MOVERS&gt;
+    &lt;/MOVERS&gt;
+    &lt;PROTOCOLS&gt;
+    &lt;/PROTOCOLS&gt;
+    &lt;OUTPUT /&gt;
+&lt;/ROSETTASCRIPTS&gt;
+</code></pre></div></div>
+
+<p>Each block contains information in running the protocol: <SCOREFXNS> and <MOVERS> are used to declare score functions and movers; while <PROTOCOLS> is where the steps of the protocol are enumerated.</PROTOCOLS></MOVERS></SCOREFXNS></p>
+
+<p>Rosetta tools are run via the command line, with flags controlling general program behavior.  Many of the flags specifically for density refinement are outlined in the sections following.</p>
+
+<h2 id="density-scoring-in-rosetta">Density scoring in Rosetta</h2>
+<p>Agreement to density is implemented in Rosetta as an additional energy term. Rosetta assesses agreement to density by computing the density that one would expect to see, given a model, and measuring the agreement of the expected and experimental density.</p>
+<h2 id="elec_dens_fast">elec_dens_fast</h2>
+<p>This scoreterm is recommended for nearly all uses of density refinement in Rosetta. It uses interpolation on a precomputed grid of per-atom scores to approximate the density correlations. This version is significantly faster (~10x) then the exact scoring term below, and is very highly correlated.</p>
+
+<p>These energy terms may be provided to Rosetta in two ways. First, it may be provided in a RosettaScript XML file as input:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Reweight scoretype="elec_dens_fast" weight="35.0"/&gt;
+</code></pre></div></div>
+
+<p>For non-Rosetta script applications, the following flag controls the density scoring function weight:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-edensity:fast_dens_wt 35.0
+</code></pre></div></div>
+
+<p>The recommended weights for each of these terms vary depending on the density map resolution, starting model quality, and protocol. Section 2 describes how the weights may be tuned. However, the following are good rules of thumb for setting the density weight within Rosetta:</p>
+
+<ul>
+  <li>At resolutions better than 2.5Å: an elec_dens_fast  weight of 65.0 is generally reasonable.</li>
+  <li>At resolutions between 2.5Å and 3.5Å: an elec_dens_fast  weight of 50.0 is generally reasonable.</li>
+  <li>At resolutions worse than 3.5Å: an elec_dens_fast  weight of 35.0 is generally reasonable.</li>
+  <li>In centroid mode (described in part 4): an elec_dens_fast  weight of 10.0 is generally reasonable</li>
+  <li>At very low resolutions (worse than 6Å), the weight may need to be further reduced.  In general, if the Rosetta energies are positive (or significant outliers are flagged by Molprobity or other validation programs) then the weights need to be reduced.</li>
+  <li>In addition to the score terms above, there are also several flags that control map scoring behavior. Maps are read into Rosetta using either the flag:</li>
+</ul>
+
+<p>At very low resolutions (worse than 6Å), the weight may need to be further reduced.  In general, if the Rosetta energies are positive (or significant outliers are flagged by Molprobity or other validation programs) then the weights need to be reduced.
+In addition to the score terms above, there are also several flags that control map scoring behavior. Maps are read into Rosetta using either the flag:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-edensity::mapfile mapfile.mrc
+</code></pre></div></div>
+
+<p>Or from XML:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;LoadDensityMap name="loaddens" mapfile="mapfile.mrc"/&gt;
+</code></pre></div></div>
+<p>Maps may be in either CCP4 or MRC format (the map type is automatically detected from the header info).
+The resolution of the map, used when comparing calculated to experimental density, is specified with the flag:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-edensity::mapreso 5.0
+</code></pre></div></div>
+<p>Maps may also be resampled to reduce memory usage and runtime. This is done through the flag:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-edensity::grid_spacing 2.0
+</code></pre></div></div>
+<p>Notice that this flag should never be more than half the given resolution, and if using the fast scoring function never more than a third of the resolution. For both parameters, the default is generally fine (don’t resample, and assume the resolution is ~3x the grid sampling).
+Finally, one may choose to calculate density using either cryoEM or X-ray scattering factors. At low resolution, this probably makes little difference, but might at resolutions better than about 3.5Å. The default is to use X-ray scattering factors; to turn on cryoEM scattering factors instead, use the following flag:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-edensity::cryoem_scatterers
+</code></pre></div></div>
+
+<h2 id="example-1a-scoring-a-pdb-in-rosetta-with-density">Example 1A: Scoring a PDB in Rosetta with density</h2>
+<p>Most simply, one may wish to simply score a model using Rosetta’s energy function including the density terms. This is easily accomplished using the <code class="highlighter-rouge">score_jd2</code> application. A sample command line to rescore the structure in density is given in <code class="highlighter-rouge">1_rosetta_basics/A_run_rescore.sh</code>. It illustrates the use of various density flags to provide Rosetta with experimental density information.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">$ROSETTA3</span>/source/bin/score_jd2.macosclangrelease <span class="se">\</span>
+ <span class="nt">-database</span> <span class="nv">$ROSETTA3</span>/database/ <span class="se">\</span>
+ <span class="nt">-database</span> ~/Rosetta/database/ <span class="se">\</span>
+ <span class="nt">-in</span>::file::s 1isrA.pdb 1issA.pdb <span class="se">\</span>
+ <span class="nt">-ignore_unrecognized_res</span> <span class="se">\</span>
+ <span class="nt">-edensity</span>::mapfile 1issA_6A.mrc <span class="se">\</span>
+ <span class="nt">-edensity</span>::mapreso 5.0 <span class="se">\</span>
+ <span class="nt">-edensity</span>::grid_spacing 2.0 <span class="se">\</span>
+ <span class="nt">-edensity</span>::fastdens_wt 35.0 <span class="se">\</span>
+ <span class="nt">-beta</span> <span class="se">\</span>
+ <span class="nt">-edensity</span>::cryoem_scatterers <span class="se">\</span>
+ <span class="nt">-crystal_refine</span>
+
+</code></pre></div></div>
+
+<p>Some flags of note are boldfaced above. First, the input structure is provided with the command <code class="highlighter-rouge">-in::file::s</code> This is common to many Rosetta applications, and more than one input may be provided; each will be processed independently.</p>
+
+<p>The flags beginning with –edensity:: tell Rosetta about the density map into which it is being fit. The name of the mapfile (in CCP4 or MRC format), the resolution of the map, the grid sampling of the map (which should never be more than half the resolution), and the weights on the various fit-to-density scoring functions. These same flags are reused for many different protocols in addition to relax. Finally, the flag <code class="highlighter-rouge">-crystal_refine</code> the flag turns on several density-related options related to PDB reading and writing, and should always be used when refining against density data.</p>
+
+<p>Note: The input PDB must be aligned to the density map using some external tool. Rosetta will optionally rigid-body minimize the structure into density before rescoring by providing the flag <code class="highlighter-rouge">–edensity::realign min</code> to the application. If this is done, the flag <code class="highlighter-rouge">–out::pdb</code> will write the minimized PDB file to a PDB file.</p>
+
+<p>This command line outputs a score file, score.sc, that gives, for each structure specified with <code class="highlighter-rouge">-in::file::s</code>,  the score with respect to each term in Rosetta’s energy function. The meaning of individual scoreterms as well as an overview of the Rosetta energy function can be found in the paper:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Alford RF, Leaver-Fay A, Jeliazkov JR, O'Meara MJ, DiMaio FP, Park H, Shapovalov MV, Renfrew PD, Mulligan VK, Kappel K, Labonte JW, Pacella MS, Bonneau R, Bradley P, Dunbrack RL Jr, Das R, Baker D, Kuhlman B, Kortemme T, Gray JJ.   The Rosetta All-Atom Energy Function for Macromolecular Modeling and Design.  J Chem Theory Comput. 2017 Jun 13;13(6):3031-3048.
+</code></pre></div></div>
+
+<h2 id="example-1b-simple-refinement-into-density-using-rosettascripts-and-relax">Example 1B: Simple refinement into density using RosettaScripts and relax</h2>
+
+<p>In this section we introduce RosettaScripts by way of a very simple refinement-into-density example. RosettaScripts provides an XML scripting interface to Rosetta that allows fine-grained control of protocols. The syntax is fully described in the Rosetta documentation; however, a very brief introduction is provided here. The basic syntax for the XML is illustrated here.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ROSETTASCRIPTS&gt;
+   &lt;SCOREFXNS&gt;
+      &lt;ScoreFunction name="dens" weights="beta_cart"&gt;
+         &lt;Reweight scoretype="elec_dens_fast" weight="35.0"/&gt;
+         &lt;Set scale_sc_dens_byres="R:0.76,K:0.76,E:0.76,D:0.76,M:0.76,C:0.81,Q:0.81,H:0.81,N:0.81,T:0.81,S:0.81,Y:0.88,W:0.88,A:0.88,F:0.88,P:0.88,I:0.88,L:0.88,V:0.88"/&gt;
+      &lt;/ScoreFunction&gt;
+   &lt;/SCOREFXNS&gt;
+
+   &lt;MOVERS&gt;
+       &lt;SetupForDensityScoring name="setupdens"/&gt;
+       &lt;LoadDensityMap name="loaddens" mapfile="1issA_6A.mrc"/&gt;
+       &lt;FastRelax name="relaxcart" scorefxn="dens" repeats="2" cartesian="1"/&gt;
+   &lt;/MOVERS&gt;
+
+   &lt;PROTOCOLS&gt;
+      &lt;Add mover="setupdens"/&gt;
+      &lt;Add mover="loaddens"/&gt;
+      &lt;Add mover="relaxcart"/&gt;
+   &lt;/PROTOCOLS&gt;
+   &lt;OUTPUT scorefxn="dens"/&gt;
+
+&lt;/ROSETTASCRIPTS&gt;
+
+</code></pre></div></div>
+
+<p>There are three “blocks” of declarations in this script.</p>
+
+<p>In the first, <code class="highlighter-rouge">&lt;SCOREFXNS&gt; … &lt;/SCOREFXNS&gt;</code>, the scorefunctions to be used throughout the protocol are declared.</p>
+
+<p>The second, <code class="highlighter-rouge">&lt;MOVERS&gt; … &lt;/MOVERS&gt;</code>, movers – or atomic operations that modify a structure – are declared.</p>
+
+<p>The third, <code class="highlighter-rouge">&lt;PROTOCOLS&gt; … &lt;/PROTOCOLS&gt;</code>, a full protocol is declared as a sequence of movers.</p>
+
+<p>In this particular example, we declare a single scorefunction, dens, which uses the score function <code class="highlighter-rouge">beta_cart</code> (a default score function, don’t need to worry about it), and turns on <code class="highlighter-rouge">elec_dens_fast</code>, the fit-to-density score, with a weight of 35. We then declare three movers, <code class="highlighter-rouge">SetupForDensityScoring</code>, <code class="highlighter-rouge">LoadDensityMap</code>, and <code class="highlighter-rouge">FastRelax</code>, which sets up the loaded structure for density scoring, loads a map into memory, and then refines the structure using the FastRelax protocol. The declared scorefunction, dens, is used as an input to the FastRelax mover.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">$ROSETTA3</span>/source/bin/rosetta_scripts.macosclangrelease <span class="se">\</span>
+ <span class="nt">-database</span> <span class="nv">$ROSETTA3</span>/database/ <span class="se">\</span>
+ <span class="nt">-in</span>::file::s 1isrA.pdb <span class="se">\</span>
+ <span class="nt">-parser</span>::protocol B_relax_density.xml <span class="se">\</span>
+ <span class="nt">-ignore_unrecognized_res</span> <span class="se">\</span>
+ <span class="nt">-edensity</span>::mapreso 5.0 <span class="se">\</span>
+ <span class="nt">-edensity</span>::cryoem_scatterers <span class="se">\</span>
+ <span class="nt">-crystal_refine</span> <span class="se">\</span>
+ <span class="nt">-beta</span> <span class="se">\</span>
+ <span class="nt">-out</span>::suffix _relax <span class="se">\</span>
+ <span class="nt">-default_max_cycles</span> 200
+
+
+</code></pre></div></div>
+
+<p>Note: We do not have to specify the density weight or the map file on the command line, since they are handled within the XML file. However, other density options must be specified on the command line. When using RosettaScripts, the density weights must be specified in the XML, the input map may be specified either way.</p>
+
+<p>Finally, in the previous XML file, the tag cartesian=1 appears, which refines the structure in Cartesian space. Rosetta also allows refinement in torsional space, which may be better for capturing domain motion, and for further reduction in model parameters against low-resolution data. To enable torsional refinement (1_rosetta_basics/C_relax_tors_density.xml), we make three small changes to the XML:</p>
+
+<h3 id="todo-how-to-bold-inline">TODO how to bold inline?</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ROSETTASCRIPTS&gt;
+   &lt;SCOREFXNS&gt;
+      &lt;ScoreFunction name="dens" weights="beta"&gt;
+         &lt;Reweight scoretype="elec_dens_fast" weight="35.0"/&gt;
+         &lt;Set scale_sc_dens_byres="R:0.76,K:0.76,E:0.76,D:0.76,M:0.76,C:0.81,Q:0.81,H:0.81,N:0.81,T:0.81,S:0.81,Y:0.88,W:0.88,A:0.88,F:0.88,P:0.88,I:0.88,L:0.88,V:0.88"/&gt;
+      &lt;/ScoreFunction&gt;
+   &lt;/SCOREFXNS&gt;
+
+   &lt;MOVERS&gt;
+       &lt;SetupForDensityScoring name="setupdens"/&gt;
+       &lt;LoadDensityMap name="loaddens" mapfile="1issA_6A.mrc"/&gt;
+       &lt;FastRelax name="relaxtors" scorefxn="dens" repeats="5" cartesian="0"/&gt;
+   &lt;/MOVERS&gt;
+
+   &lt;PROTOCOLS&gt;
+      &lt;Add mover="setupdens"/&gt;
+      &lt;Add mover="loaddens"/&gt;
+      &lt;Add mover="relaxtors"/&gt;
+   &lt;/PROTOCOLS&gt;
+   &lt;OUTPUT scorefxn="dens"/&gt;
+
+&lt;/ROSETTASCRIPTS&gt;
+
+</code></pre></div></div>
+
+<p>end of tutorial one</p>
+
+
+    <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2019 Dimaio lab. All rights reserved. <br />
+ Site last generated: Oct 20, 2019 <br />
+<p><img src="images/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>

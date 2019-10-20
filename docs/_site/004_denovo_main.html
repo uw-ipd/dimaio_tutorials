@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keywords" content=",  denovo de-novo novo experimental cryo model density">
+<title>De novo model-building guided by experimental density data | Dimaio lab CryoEM tutorials</title>
+<link rel="stylesheet" href="css/syntax.css">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme-blue.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="documentation_test" href="http://0.0.0.0:4000/feed.xml">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container topnavlinks">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="fa fa-home fa-lg navbar-brand" href="index.html">&nbsp;<span class="projectTitle"> Dimaio lab CryoEM tutorials</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- toggle sidebar button -->
+                <li><a id="tg-sb-link" href="#"><i id="tg-sb-icon" class="fa fa-toggle-on"></i> Nav</a></li>
+                <!-- entries without drop-downs appear here -->
+
+
+
+
+                
+                
+                
+                <li><a href="https://github.com/tomjoht/documentation-theme-jekyll" target="_blank" rel="noopener">GitHub</a></li>
+                
+                
+                
+                <!-- entries with drop-downs appear here -->
+                <!-- conditional logic to control which topnav appears for the audience defined in the configuration file.-->
+                
+                
+                <!--comment out this block if you want to hide search-->
+                <li>
+                    <!--start search-->
+                    <div id="search-demo-container">
+                        <input type="text" id="search-input" placeholder="search...">
+                        <ul id="results-container"></ul>
+                    </div>
+                    <script src="js/jekyll-search.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                            SimpleJekyllSearch.init({
+                                searchInput: document.getElementById('search-input'),
+                                resultsContainer: document.getElementById('results-container'),
+                                dataSource: 'search.json',
+                                searchResultTemplate: '<li><a href="{url}" title="De novo model-building guided by experimental density data">{title}</a></li>',
+                    noResultsText: 'No results found.',
+                            limit: 10,
+                            fuzzy: true,
+                    })
+                    </script>
+                    <!--end search-->
+                </li>
+            </ul>
+        </div>
+        </div>
+        <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <div id="main">
+    <!-- Content Row -->
+    <div class="row">
+        
+        
+            <!-- Sidebar Column -->
+            <div class="col-md-3" id="tg-sb-sidebar">
+                
+
+<ul id="mysidebar" class="nav">
+  <li class="sidebarTitle">Dimaio lab tutorials 1.0</li>
+  
+  
+  
+  <li>
+      <a title="Rosetta & cryoEM tutorial" href="#">Rosetta & cryoEM tutorial</a>
+      <ul>
+          
+          
+          
+          <li><a title="" href="index.html"></a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Rosetta & CryoEM basics" href="001_basics_main.html">Rosetta & CryoEM basics</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Model refinement" href="002_refinement_main.html">Model refinement</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Model rebuilding" href="003_rebuilding_main.html">Model rebuilding</a></li>
+          
+          
+          
+          
+          
+          
+          <li class="active"><a title="De-novo modeling" href="004_denovo_main.html">De-novo modeling</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Rebuilding long segments" href="005_ES_main.html">Rebuilding long segments</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
+      <!-- if you aren't using the accordion, uncomment this block:
+         <p class="external">
+             <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
+         </p>
+         -->
+</ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+            </div>
+            
+        
+
+        <!-- Content Column -->
+        <div class="col-md-9" id="tg-sb-content">
+            <div class="post-header">
+   <h1 class="post-title-main">De novo model-building guided by experimental density data</h1>
+</div>
+
+
+
+<div class="post-content">
+
+   
+
+    
+    
+<!-- this handles the automatic toc. use ## for subheads to auto-generate the on-page minitoc. if you use html tags, you must supply an ID for the heading element in order for it to appear in the minitoc. -->
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+$('#toc').toc({ minimumHeaders: 0, listType: 'ul', showSpeed: 0, headers: 'h2,h3,h4' });
+
+/* this offset helps account for the space taken up by the floating toolbar. */
+$('#toc').on('click', 'a', function() {
+  var target = $(this.getAttribute('href'))
+    , scroll_target = target.offset().top
+
+  $(window).scrollTop(scroll_target - 10);
+  return false
+})
+  
+});
+</script>
+
+<div id="toc"></div>
+
+    
+
+
+    
+
+    <a target="_blank" rel="noopener" href="https://github.com/danpf/documentation_test/blob/master/docs/pages/004_denovo/004_denovo_main.md" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
+
+    
+
+   <p>In this scenario, we introduce a tool, <code class="highlighter-rouge">denovo_density</code>, aimed at automatically building backbone and placing sequence in 3-4.5 Å cryoEM density maps.  This tool is primarily intended for cases where a model is to be built with no known structural homologues.  It is relatively expensive computationally, and consists of four basic steps:</p>
+
+<ul>
+  <li>Search for local backbone “fragments” in the density map</li>
+  <li>Score the “compatability” of sets of placed fragments</li>
+  <li>Monte Carlo sampling for the “maximally compatable” fragment set</li>
+  <li>Consensus assignment from the best-scoring Monte Carlo trajectories</li>
+</ul>
+
+<p>The input of the method is a segmented density map, and the sequence contained in this region. The output
+of the method is a “partial model” that – ideally – places 70-80% of the sequence into the density map. This
+partial model can then be used as input for RosettaCM (see section 3 of the tutorial).</p>
+
+<p>This method is under constant development. Current limitations of the approach – hopefully to be addressed
+in future revisions – include:</p>
+
+<ul>
+  <li>The code assumes segmented density maps. It cannot handle symmetry, and poorly handles unsegmented density maps. Results are best when the map is segments to only contain one copy of the residues getting built.</li>
+  <li>It has only been tested building proteins ~600 residues or less. While it should conceptually scale to larger proteins, this is untested. Furthermore, with larger proteins, the memory usage of steps 2 and 3 increases significantly, so care must be taken.</li>
+  <li>It currently does not identify and build ligands or nucleic acids</li>
+</ul>
+
+<p>This section of the tutorial walks through these four steps of the protocol. As a running example, we again
+use the 20S proteasome (Xueming Li et al., Nature Methods, 2013), in this case using a 4.8Å reconstruction
+determined without using motion correction. We will pretend that known homologous structures are not
+available, and instead will build models into density denovo.</p>
+
+<h2 id="input-file-preparation-download-fragment-files-from-robetta">Input file preparation: download fragment files from Robetta</h2>
+
+<p>Before running the method, a user must first create a “fragment file” that predicts local backbone
+conformations given the amino-acid sequence. The easiest way to do so is to submit your sequence at
+<a href="http://robetta.bakerlab.org/">robetta</a>.</p>
+
+<p>Alternately, the Rosetta users guide describes how fragment files may be built locally:
+<a href="https://www.rosettacommons.org/manuals/archive/rosetta3.5_user_guide/dc/d10/app_fragment_picker.
+html">here</a></p>
+
+<h2 id="step-4a-local-fragment-search">Step 4A. Local fragment search</h2>
+
+<p>In the first part of the procedure, we search the density map for each sequence-predicted backbone
+fragment. This part, like all the steps in this section, uses a Rosetta application denovo_density.</p>
+
+<p>The command to run fragment searching for a single residue (4_denovo_demo/A_search.sh):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+mkdir round1
+
+<span class="nv">$ROSETTA3</span>/source/bin/denovo_density.macosclangrelease <span class="se">\</span>
+	<span class="nt">-in</span>::file::fasta t20sA.fasta <span class="se">\</span>
+	<span class="nt">-fragfile</span> ./t001_.25.9mers <span class="se">\</span>
+	<span class="nt">-mapfile</span> ./T20S_48A_alpha_chainA.mrc <span class="se">\</span>
+	<span class="nt">-n_to_search</span> 500 <span class="nt">-n_filtered</span> 2500 <span class="nt">-n_output</span> 50 <span class="se">\</span>
+	<span class="nt">-bw</span> 16 <span class="se">\</span>
+	<span class="nt">-atom_mask_min</span> 2 <span class="se">\</span>
+	<span class="nt">-atom_mask</span> 3 <span class="se">\</span>
+	<span class="nt">-clust_radius</span> 3 <span class="se">\</span>
+	<span class="nt">-clust_oversample</span> 4 <span class="se">\</span>
+	<span class="nt">-point_radius</span> 3 <span class="se">\</span>
+	<span class="nt">-movestep</span> 1 <span class="se">\</span>
+	<span class="nt">-delR</span> 2 <span class="se">\</span>
+	<span class="nt">-frag_dens</span> 0.8 <span class="se">\</span>
+	<span class="nt">-ncyc</span> 3 <span class="se">\</span>
+	<span class="nt">-min_bb</span> <span class="nb">false</span> <span class="se">\</span>
+	<span class="nt">-pos</span> <span class="nv">$1</span> <span class="se">\</span>
+	<span class="nt">-out</span>:file:silent round1/t20s.<span class="nv">$1</span>.silent
+
+</code></pre></div></div>
+
+<p>Most of the arguments shown here should be left as-is. However, there are a few that you might want to change:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-n_to_search 500 -n_filtered 2500
+</code></pre></div></div>
+
+<p>These flags control the number of translations to search, and the number of intermediate solutions to keep.
+As a rule of thumb, these should be about <strong>2 and 10 times the number of residues in the map,
+respectively.</strong></p>
+
+<p>Make note of the following flag:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-pos $1
+</code></pre></div></div>
+
+<p>This flag tells the code to only search for fragments at the assigned positions. This allows for parallelization
+of the script, by running separate jobs for each position in the protein. ($1 means the script takes the
+position as an input argument).</p>
+
+<p>For this step, you need to run the script once for each position in the protein. This can be done very simply
+with the bash command (for this case, the 221 indicates there are 221 residues in the protein):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in `seq 1 221`; do ./A_search.sh $i; done
+</code></pre></div></div>
+
+<p>The output of this script is a single file for each position in the protein, that identifies the placement
+and configuration of each docked fragment. These files are used as input for the next step of the
+process.</p>
+
+<p>However, as each position runs independently, and each position might take 30 minutes to an hour
+for the search, you will probably want to parallelize this over many processors.</p>
+
+<h2 id="job-distribution">Job distribution</h2>
+
+<p>As this is the most computationally intensive step, it makes sense to parallelize this step, by run this
+procedure separately for each position in the protein. Using GNU parallel.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel -j16 ./A_search.sh {} ::: {1..221}
+</code></pre></div></div>
+
+<p>GNU parallel allows launching of jobs remotely if SSH keys have been set up for passwordless login. To run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel -S 16/node1,16/node2,16/node3,16/node4 --workdir . ./A_search.sh {} ::: {1..221}
+</code></pre></div></div>
+
+<p>This will launch instead 48 jobs spread across four machines. See the GNU parallel documentation for more
+information.</p>
+
+<h2 id="other-useful-options">Other useful options</h2>
+
+<p>There are two options controlling fragment placement that may also be useful in cases where there is some
+previous knowledge about the structure in question. The first of these deals with the case where the
+backbone structure is known (or at least somewhat known) but registration of the sequence with the
+backbone model is ambiguous. In this case, a known backbone model can be provided with the flag:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-ca_positions backbone.pdb
+</code></pre></div></div>
+
+<p>In this case, the code will only consider fragments centered on the C alpha positions from the input model.
+This offers a significant speedup as well as reduced search space.</p>
+
+<p>Alternately, if part of the structure is known in advance, it may be provided with the flag:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-startmodel start.pdb
+</code></pre></div></div>
+
+<p>In this case, the matching routine will match only the native fragments covered by start model, ensuring that
+these positions will be maintained throughout the refinement. When using this options there are two
+important things to keep in mind:</p>
+
+<ul>
+  <li>The numbering in the PDB file <strong>must</strong> match the numbering of the input fasta</li>
+  <li>Any continuous segments <strong>shorter than 9 amino acids</strong> in the input file will get ignored</li>
+</ul>
+
+<h2 id="step-4b-placed-fragment-scoring">Step 4B. Placed fragment scoring</h2>
+
+<p>In this step, we want to take the placements from the previous step and score them for compatability. The
+outputs from step A are used as inputs in this step (4_denovo_demo/B_score.sh):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+<span class="nv">$ROSETTA3</span>/source/bin/denovo_density.macosclangrelease <span class="se">\</span>
+	<span class="nt">-mode</span> score <span class="se">\</span>
+	<span class="nt">-in</span>::file::silent round1/t20s<span class="k">*</span>silent <span class="se">\</span>
+	<span class="nt">-scorefile</span> round1/scores1 <span class="se">\</span>
+	<span class="nt">-n_matches</span> 50
+
+</code></pre></div></div>
+
+<p>Highlighted in bold are the input files (<code class="highlighter-rouge">-in::file::silent</code>) - the outputs from the previous step – and the score
+file to be written (<code class="highlighter-rouge">-scorefile</code>), the output of this step. If the output is written to a separate folder, you will
+need to point the command line to this alternate location.</p>
+
+<p>This step is relatively fast (less than 5 minutes) and can be run on a single processor.</p>
+
+<h2 id="step-4c-monte-carlo-fragment-assembly">Step 4C. Monte Carlo fragment assembly</h2>
+
+<p>In the third step, we use the outputs from the previous two steps, and try to generate a “maximally
+consistent” fragment assignment. It uses Monte Carlo sampling and a scorefunction assessing fragment
+compatibility to identify this fragment set. The command line (<code class="highlighter-rouge">4_denovo_demo/C_assemble.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+<span class="nv">$ROSETTA3</span>/source/bin/denovo_density.macosclangrelease <span class="se">\</span>
+	<span class="nt">-mode</span> assemble <span class="se">\</span>
+	<span class="nt">-nstruct</span> 5 <span class="se">\</span>
+	<span class="nt">-in</span>::file::silent round1/t20s<span class="k">*</span>silent <span class="se">\</span>
+	<span class="nt">-scorefile</span> round1/scores1 <span class="se">\</span>
+	<span class="nt">-assembly_weights</span> 4 20 6 <span class="se">\</span>
+	<span class="nt">-null_weight</span> <span class="nt">-150</span> <span class="se">\</span>
+	<span class="nt">-out</span>:file:silent round1/assembled.<span class="nv">$1</span> <span class="se">\</span>
+	<span class="nt">-scale_cycles</span> 1 <span class="se">\</span>
+	<span class="nt">-mute</span> core
+
+</code></pre></div></div>
+
+<p>As with step B, the outputs of the previous two steps need to be provided as inputs:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-in::file::silent round1/t20s*silent
+-scorefile round1/scores1
+</code></pre></div></div>
+
+<p>The script then writes a single file for each independent trajectory:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-out:file:silent round1/assembled.$1
+</code></pre></div></div>
+
+<p>Finally, each job will generate several (in this case 5) independent trajectories:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-nstruct 5
+</code></pre></div></div>
+
+<p>It is recommended to generate a total of 1000 independent trajectories. As with step A, this can be
+somewhat time-consuming (though not as time-consuming as step A). Therefore it is recommended to
+parallelize this as before:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel –j16 ./C_assemble.sh {} ::: {1..200}
+</code></pre></div></div>
+
+<p>Or across multiple machines:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel -S 16/node1,16/node2,16/node3,16/node4 --workdir . ./C_assemble.sh {} ::: {1..200}
+</code></pre></div></div>
+
+<h2 id="step-4d-consensus-assignment">Step 4D. Consensus assignment</h2>
+
+<p>The final step of the protocol is to identify the consensus assignment from the lowest-scoring Monte Carlo
+trajectories. This is done using the following command (<code class="highlighter-rouge">4_denovo_demo/D_consensus.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+<span class="nv">$ROSETTA3</span>/source/bin/denovo_density.macosclangrelease <span class="se">\</span>
+	<span class="nt">-mode</span> consensus <span class="se">\</span>
+	<span class="nt">-in</span>::file::silent round1/assembled.<span class="k">*</span>silent <span class="se">\</span>
+	<span class="nt">-consensus_frac</span> 1.0 <span class="nt">-energy_cut</span> 0.05 <span class="se">\</span>
+	<span class="nt">-mute</span> core
+
+<span class="c"># use the old model as a starting point</span>
+cp S_0001.pdb round1_model.pdb
+
+</code></pre></div></div>
+
+<p>The output trajectories of the previous step are provided as input to this script with <code class="highlighter-rouge">-in::file::silent</code>. This
+script looks for a consensus assignment in the best-scoring trajectories, and will output a PDB file,
+<code class="highlighter-rouge">S_0001.pdb</code>.</p>
+
+<p>This PDB file contains sequence placed into density. Ideally, the model at this point is more than 70%
+complete, and this file can then be used as input to RosettaCM (see section 3). If instead this structure
+contains a reasonable partial model, but with less than 70% coverage, the iterative approach of the next
+section can further improve the coverage of the partial model.</p>
+
+<h2 id="step-4e-iterative-assembly-to-increase-model-coverage">Step 4E. Iterative assembly to increase model coverage</h2>
+
+<p>In some cases, it may be necessary to iterate refinement, as subsequent rounds of denovo building may trace
+portions of the model unable to be placed in previous rounds. The following command line illustrates how
+assembly may be iterated (<code class="highlighter-rouge">4_denovo_demo/E_search_iter.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+mkdir round2
+
+<span class="nv">$ROSETTA3</span>/source/bin/denovo_density.macosclangrelease <span class="se">\</span>
+	<span class="nt">-in</span>::file::fasta t20sA.fasta <span class="se">\</span>
+	<span class="nt">-fragfile</span> ./t001_.25.9mers <span class="se">\</span>
+	<span class="nt">-startmodel</span> round1_model.pdb <span class="se">\</span>
+	<span class="nt">-mapfile</span> ./T20S_48A_alpha_chainA.mrc <span class="se">\</span>
+	<span class="nt">-n_to_search</span> 250 <span class="nt">-n_filtered</span> 1250 <span class="nt">-n_output</span> 50 <span class="se">\</span>
+	<span class="nt">-bw</span> 16 <span class="se">\</span>
+	<span class="nt">-atom_mask_min</span> 2 <span class="se">\</span>
+	<span class="nt">-atom_mask</span> 3 <span class="se">\</span>
+	<span class="nt">-clust_radius</span> 3 <span class="se">\</span>
+	<span class="nt">-clust_oversample</span> 4 <span class="se">\</span>
+	<span class="nt">-point_radius</span> 3 <span class="se">\</span>
+	<span class="nt">-movestep</span> 1 <span class="se">\</span>
+	<span class="nt">-delR</span> 2 <span class="se">\</span>
+	<span class="nt">-frag_dens</span> 0.8 <span class="se">\</span>
+	<span class="nt">-ncyc</span> 3 <span class="se">\</span>
+	<span class="nt">-min_bb</span> <span class="nb">false</span> <span class="se">\</span>
+	<span class="nt">-pos</span> <span class="nv">$1</span> <span class="se">\</span>
+	<span class="nt">-out</span>:file:silent round2/t20s.<span class="nv">$1</span>.silent
+
+</code></pre></div></div>
+
+<p>This step is nearly identical to step A, with two key chages highlighted in bold. that the output of the previous step is to be used as an initial model:
+The first change indicates</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-startmodel round1_model.pdb
+</code></pre></div></div>
+
+<p>Following inspection, this model may also be manually edited as well.</p>
+
+<p>The second change makes sure the outputs don’t clobber the outputs from the previous step:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-out:file:silent t20s.rd2.$1.silent
+</code></pre></div></div>
+<p>As with step A, this should be parallelized over many processors, e.g, using GNU parallel:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parallel –S 16/node1,16/node2,16/node3,16/node4 --workdir . ./E_search_iter.sh {} ::: {1..221}
+</code></pre></div></div>
+
+<p>Once complete, steps B,C, and D may be then followed in order, making sure that the input and output files
+are updated to indicate the round 2 models.</p>
+
+<p>NOTE: At each step, be certain that your outputs are not overwriting one another. Once the partial model
+has been calculated, it is safe to delete the intermediate files created as part of the construction process. In
+this case, the same output file names may be reused (thus, the same scripts can be used for each iteration
+aside from the first).</p>
+
+
+
+    <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+    </div>
+
+
+
+
+</div>
+
+<hr class="shaded"/>
+
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+               &copy;2019 Dimaio lab. All rights reserved. <br />
+ Site last generated: Oct 20, 2019 <br />
+<p><img src="images/company_logo.png" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
+        </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /#main -->
+    </div>
+
+</body>
+
+</html>
