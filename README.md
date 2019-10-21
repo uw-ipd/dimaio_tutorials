@@ -5,7 +5,7 @@ To edit this look at:
 
 sidebar: docs/_data/sidebars/mydoc_sidebar.yml
 
-mainpage: index.md
+mainpage: docs/index.md
 
 pages: docs/pages/
 
