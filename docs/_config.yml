@@ -1,4 +1,4 @@
-repository: danpf/documentation_test
+repository: uw-ipd/dimaio_tutorials
 
 output: web
 # this property is useful for conditional filtering of content that is separate from the PDF.
@@ -12,7 +12,7 @@ site_title: Dimaio lab CryoEM tutorials
 company_name: Dimaio lab
 # this appears in the footer
 
-github_editme_path: danpf/documentation_test/blob/master/docs/
+github_editme_path: uw-ipd/dimaio_tutorials/blob/master/docs/
 # if you're using Github, provide the basepath to the branch you've created for reviews, following the sample here. if not, leave this value blank.
 
 host: 127.0.0.1
@@ -82,7 +82,6 @@ defaults:
 
 # these are defaults used for the frontmatter for these file types
 
-# TODO DAN GET RID OF
 sidebars:
 - home_sidebar
 
