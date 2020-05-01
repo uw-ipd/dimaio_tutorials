@@ -13,7 +13,7 @@ This tutorial is intended to introduce users to several different ways Rosetta m
 ```
 git clone https://github.com/uw-ipd/dimaio_tutorials.git
 ```
-**or visit** [this website](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/uw-ipd/dimaio_tutorials/tree/master/docs/_includes/custom/density_demo_files)
+**or visit** [this website](https://danpf.github.io/DownGit/#/home?url=https://github.com/uw-ipd/dimaio_tutorials/tree/master/docs/_includes/custom/density_demo_files)
 
 ## The tutorial is split up into four parts.
 1.  An introduction to Rosetta in general, showing how one may score structures and minimize structures guided by experimental density data
