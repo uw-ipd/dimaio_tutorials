@@ -28,7 +28,7 @@ density and the Rosetta energy function. This tool can be used on a partial mode
 application, an incomplete homology model, or any other starting structure.  An overview of the method is
 depicted in the image below:
 
-{% include RosettaES_Fig_s1 file="rosetta_ES_figs1.webp" caption="The RosettaES overview" %}
+{% include image.html file="rosetta_ES_figs1.webp" caption="The RosettaES overview" %}
 
 RosettaES runs best when working with data at resolutions 5 Å or better with segments to rebuild shorter
 than 50 residues. However, with very large amounts of sampling (e.g., ensemble sizes > 250), reliable
