@@ -23,7 +23,7 @@
 	<MOVERS>
 		<SetupForDensityScoring name="setup_dens"/>
 		<FragmentExtension name="ext" fasta="t20sA.fasta" scorefxn="dens" censcorefxn="cendens" beamwidth="32" dumpbeam="0" samplesheets="1" 
-				read_from_file="0" comparatorrounds="100" continuous_weight="0.3" looporder="1" writelps="1" 
+				read_from_file="0" comparatorrounds="100" continuous_weight="0.3" looporder="1" writelps="1" minmelt="15" 
 				readbeams="%%readbeams%%" storedbeams="%%beams%%" steps="%%steps%%" pcount="%%pcount%%"
 				filterprevious="%%filterprevious%%" filterbeams="%%filterbeams%%">
 			<Fragments fragfile="100.3mers"/>

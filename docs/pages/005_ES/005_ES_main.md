@@ -105,6 +105,13 @@ The input XML file exposes key parameters for conformational sampling. In the tu
 		&lt;Fragments fragfile="100.3mers"/>
 		&lt;Fragments fragfile="20.9mers"/>
 	&lt;/FragmentExtension>
+	&lt;FragmentExtension name="ext" fasta="t20sA.fasta" scorefxn="dens" censcorefxn="cendens" <b>beamwidth="32"</b> dumpbeam="0" <b>samplesheets="1"</b> 
+			read_from_file="0" <b>comparatorrounds="100"</b> continuous_weight="0.3" looporder="1" writelps="1" <b>minmelt="15"</b>
+			readbeams="%%readbeams%%" storedbeams="%%beams%%" steps="%%steps%%" pcount="%%pcount%%"
+			filterprevious="%%filterprevious%%" filterbeams="%%filterbeams%%">
+		&lt;Fragments fragfile="100.3mers"/>
+		&lt;Fragments fragfile="20.9mers"/>
+	&lt;/FragmentExtension>
 ...
 
 </code>
@@ -126,6 +133,8 @@ The sampling behavior of RosettaES is controlled by the block above. Many of the
 Others are user-specified, and can be modified based on the size of the loop and resolution of the data:
 * `beamwidth`: controls the maximum number of solutions to be held at each step. Setting the value higher will increase run time but may improve accuracy.
 * `windowdensweight`: the relative contribution of density in model selection
+* `minmelt`: how many residues previous (or after depending on the direction of fragment extension) to minimize before adding a residue.
+  * WARNING *If you are confident in your starting model, set this to 3, if it is from De-novo modeling leave it at 15*
 
 For many cases, the default parameters are sufficient. However, if the segment to grow is long (50+
 residues), you may need to increase beamwidth; if the density is low resolution, you might need to decrease
