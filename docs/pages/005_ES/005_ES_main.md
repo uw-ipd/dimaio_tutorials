@@ -8,6 +8,12 @@ written by: Daniel Farrell, Brandon Frenz, Ray Y.-R. Wang, Frank DiMaio -- last 
 ---
 
 
+```
+Citation:
+
+Frenz, B., Walls, A., Egelman, E. et al. RosettaES: a sampling strategy enabling automated interpretation of difficult cryo-EM maps. Nat Methods 14, 797–800 (2017). https://doi-org.offcampus.lib.washington.edu/10.1038/nmeth.4340
+```
+
 
 While the previous workflows have address model building and model refinement, none of the
 aforementioned tools deal with completion of large segments of protein. These may arise in several cases:
@@ -19,7 +25,10 @@ aforementioned tools deal with completion of large segments of protein. These ma
 To address these issues, we have developed a tool called Rosetta Enumerative Sampling, which uses a
 ensemble search algorithm to determine a large number of conformations that are both consistent with the
 density and the Rosetta energy function. This tool can be used on a partial models from the `denovo_denisty`
-application, an incomplete homology model, or any other starting structure.
+application, an incomplete homology model, or any other starting structure.  An overview of the method is
+depicted in the image below:
+
+{% include RosettaES_Fig_s1 file="rosetta_ES_figs1.webp" caption="The RosettaES overview" %}
 
 RosettaES runs best when working with data at resolutions 5 Å or better with segments to rebuild shorter
 than 50 residues. However, with very large amounts of sampling (e.g., ensemble sizes > 250), reliable
