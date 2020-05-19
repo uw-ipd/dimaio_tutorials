@@ -27,13 +27,11 @@ models may be produced with segments longer than 100 residues. At resolutions wo
 may be unreliable. The method can be used on both segmented and unsegmented density maps, however,
 removal of density belonging to parts of the structure not being modeled may improve results.
 
-RosettaES model building consists of three steps. Initially, a preparation step builds the fragments that are
-to be used in conformational sampling. Then a rebuilding step will identify each unassigned segment in the
-initial model and build an ensemble of possible solutions for each. Finally, a combination step finds all the
-consistent subsets of interactions, and refines all such models (if there is only one segment, the script simply
-refines all structures in the ensemble). In this combination step, if assembly fails to find a consistent set of
-solutions, an additional round of sampling will be carried out, forcing different solutions than the previous
-model.
+Running RosettaES model building consists of three main steps.
+1. A preparation step builds the fragments that are to be used in conformational sampling.
+2. A rebuilding step will identify each unassigned segment in the initial model and build an ensemble of possible solutions for each.
+3. A combination step finds all the consistent subsets of interactions, and refines all such models (if there is only one segment, the script simply refines all structures in the ensemble).
+    * In this combination step, if assembly fails to find a consistent set of solutions, an additional round of sampling will be carried out, forcing different solutions than the previous model.
 
 Compared to the other sections, the workflow is a bit more complicated when extended to multiple compute
 cores. To handle job distribution we have included a python script RunRosettaES.py that manages this job
