@@ -133,9 +133,10 @@ The sampling behavior of RosettaES is controlled by the block above. Many of the
 – are used by the job distribution script to pass results from one step to the next, and they should be left as-is.
 Others are user-specified, and can be modified based on the size of the loop and resolution of the data:
 * `beamwidth`: controls the maximum number of solutions to be held at each step. Setting the value higher will increase run time but may improve accuracy.
+  * If you find 32 is not enough, we often use 256 for modeling more difficult regions
 * `windowdensweight`: the relative contribution of density in model selection
 * `minmelt`: how many residues previous (or after depending on the direction of fragment extension) to minimize before adding a residue.
-  * WARNING *If you are confident in your starting model, set this to 3, if it is from De-novo modeling leave it at 15*
+  * <b>WARNING If you are confident in your starting model, set this to 2-3, if it is from De-novo modeling leave it at 15</b>
 
 For many cases, the default parameters are sufficient. However, if the segment to grow is long (50+
 residues), you may need to increase beamwidth; if the density is low resolution, you might need to decrease
