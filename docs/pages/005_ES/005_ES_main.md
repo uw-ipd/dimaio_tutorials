@@ -96,8 +96,10 @@ The input XML file exposes key parameters for conformational sampling. In the tu
 <pre>
 <code>
 ...
-  &lt;FragmentExtension name="ext" fasta="t20sA.fasta" scorefxn="dens" censcorefxn="cendens" <b>beamwidth="32"</b> dumpbeam="0" <b>samplesheets="1"</b> 
-      read_from_file="0" <b>comparatorrounds="100"</b> continuous_weight="0.3" looporder="1" writelps="1" <b>minmelt="15"</b>
+  &lt;FragmentExtension name="ext" fasta="t20sA.fasta" scorefxn="dens" censcorefxn="cendens"
+      <b>beamwidth="32"</b> dumpbeam="0" <b>samplesheets="1"</b> 
+      read_from_file="0" <b>comparatorrounds="100"</b> continuous_weight="0.3" looporder="1"
+      writelps="1" <b>minmelt="15"</b>
       readbeams="%%readbeams%%" storedbeams="%%beams%%" steps="%%steps%%" pcount="%%pcount%%"
       filterprevious="%%filterprevious%%" filterbeams="%%filterbeams%%">
     &lt;Fragments fragfile="100.3mers"/>
