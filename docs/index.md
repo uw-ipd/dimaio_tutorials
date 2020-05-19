@@ -32,11 +32,11 @@ Command-line flags and input scripts are provided in shaded boxes, with boldface
 
 ## Which section should one read?
 
-* If you want a straightforward introduction to scoring and basic refinement of structures in Rosetta, read Section 1.
-* If you have a model that you want to refine into a 3 - 4.5Å density map, read Section 2.
-* If you have a density map at 3 - 4.5Å (or worse!), one or more partial models, and you want to combine the models and rebuild short insertions and deletions, read Section 3.
-* If you have a 3 - 4.5Å density map with no homology information available, and want to build a model, read Section 4.
-* If you have a 3 - 4.5Å density map and a very incomplete model you want to complete, read Section 5.
+*  If you want a straightforward introduction to scoring and basic refinement of structures in Rosetta, read Section 1.
+*  If you have a model that you want to refine into a 3 - 4.5Å density map, read Section 2.
+*  If you have a density map at 3 - 4.5Å (or worse!), one or more partial models, and you want to combine the models and rebuild short insertions and deletions, read Section 3.
+*  If you have a 3 - 4.5Å density map with no homology information available, and want to build a model, read Section 4.
+*  If you have a 3 - 4.5Å density map and a very incomplete model you want to complete, read Section 5.
 
 ## Other notes.
 For all the applications in this tutorial, it is recommended that you download the latest weekly release of Rosetta.
