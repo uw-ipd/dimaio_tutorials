@@ -97,11 +97,11 @@ The input XML file exposes key parameters for conformational sampling. In the tu
 <code>
 ...
 	&lt;FragmentExtension name="ext" fasta="full.fasta" scorefxn="dens"
-	censcorefxn="cendens" <b>beamwidth="32"</b> dumpbeam="0" <b>samplesheets="1"</b> read_from_file="0"
-	continuous_weight="0.3" looporder="1" <b>comparatorrounds=”100” windowdensweight=”30”</b>
-	readbeams="%%readbeams%%" storedbeams="%%beams%%"
-	steps="%%steps%%" pcount="%%pcount%%" filterprevious="%%filterprevious%%"
-	filterbeams="%%filterbeams%%">
+			censcorefxn="cendens" <b>beamwidth="32"</b> dumpbeam="0" <b>samplesheets="1"</b> read_from_file="0"
+			continuous_weight="0.3" looporder="1" <b>comparatorrounds=”100” windowdensweight=”30”</b>
+			readbeams="%%readbeams%%" storedbeams="%%beams%%"
+			steps="%%steps%%" pcount="%%pcount%%" filterprevious="%%filterprevious%%"
+			filterbeams="%%filterbeams%%">
 		&lt;Fragments fragfile="100.3mers"/>
 		&lt;Fragments fragfile="20.9mers"/>
 	&lt;/FragmentExtension>
@@ -111,9 +111,18 @@ The input XML file exposes key parameters for conformational sampling. In the tu
 </pre>
 
 
-The sampling behavior of RosettaES is controlled by the block above. Many of the tags in this block – fasta,
-dumpbeam, read_from_file, storedbeams, steps, pcount, filterprevious, comparitorrounds, and filterbeams – are
-used by the job distribution script to pass results from one step to the next, and they should be left as-is.
+The sampling behavior of RosettaES is controlled by the block above. Many of the tags in this block –
+*  `fasta`
+*  `dumpbeam`
+*  `read_from_file`
+*  `storedbeams`
+*  `steps`
+*  `pcount`
+*  `filterprevious`
+*  `comparitorrounds`
+*  and `filterbeams`
+
+– are used by the job distribution script to pass results from one step to the next, and they should be left as-is.
 Others are user-specified, and can be modified based on the size of the loop and resolution of the data:
 * `beamwidth`: controls the maximum number of solutions to be held at each step. Setting the value higher will increase run time but may improve accuracy.
 * `windowdensweight`: the relative contribution of density in model selection
